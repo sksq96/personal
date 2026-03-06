@@ -11,7 +11,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (!overlay || !trigger) return;
 
-    // All messages stored as { sender: 'Visitor'|'Shubham', text, timestamp }
+    // All messages stored as { sender: 'Rebecca'|'Shubham', text, timestamp }
     const chatLog = [];
 
     function timestamp() {
@@ -92,7 +92,7 @@ document.addEventListener('DOMContentLoaded', () => {
         input.value = '';
         addMessage(text, 'user');
 
-        chatLog.push({ sender: 'Visitor', text: text, timestamp: timestamp() });
+        chatLog.push({ sender: 'Rebecca', text: text, timestamp: timestamp() });
 
         const typing = addTyping();
 
