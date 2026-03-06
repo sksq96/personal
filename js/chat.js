@@ -1,5 +1,5 @@
-const CHAT_API = 'https://cite-disc-pools-textile.trycloudflare.com/v1/chat/completions';
-const CHAT_MODEL = '/tmp/shubham_merged_16bit';
+const CHAT_API = 'https://lookup-memphis-eugene-genes.trycloudflare.com/v1/chat/completions';
+const CHAT_MODEL = '/tmp/shubham_v2_merged_16bit';
 
 document.addEventListener('DOMContentLoaded', () => {
     const overlay = document.getElementById('chat-overlay');
