@@ -734,9 +734,10 @@ CHAT OVERLAY
 .chat-chrome {
     width: min(72vw, 840px);
     height: 72vh;
+    max-width: 100%;
     display: flex;
     flex-direction: column;
-    background: rgba(255, 255, 255, 0.02);
+    background: rgba(10, 10, 10, 0.95);
     border: 1px solid rgba(239, 239, 239, 0.06);
     border-radius: 4px;
     overflow: hidden;
@@ -917,14 +918,32 @@ CHAT OVERLAY
 }
 
 @media (max-width: 768px) {
-    .chat-chrome {
-        width: 94vw;
-        height: 85vh;
-        border-radius: 8px;
+    .chat-overlay {
+        padding: 0;
     }
-    .chat-header { padding: 20px 22px 16px; }
-    .chat-messages { padding: 22px; gap: 14px; }
-    .chat-input-area { padding: 14px 22px 20px; }
+    .chat-overlay.open {
+        align-items: flex-end;
+    }
+    .chat-chrome {
+        width: 100%;
+        max-width: 100%;
+        height: 90dvh;
+        border-radius: 16px 16px 0 0;
+        border-bottom: none;
+        border-left: none;
+        border-right: none;
+    }
+    .chat-header { padding: 18px 20px 14px; }
+    .chat-messages { padding: 16px 18px; gap: 12px; }
+    .chat-msg { max-width: 82%; }
+    .chat-input-area {
+        padding: 12px 18px;
+        padding-bottom: calc(14px + env(safe-area-inset-bottom, 0px));
+        background: rgba(10, 10, 10, 0.98);
+    }
+    .chat-input {
+        font-size: 16px; /* prevents iOS zoom on focus */
+    }
 }
 
 @media (max-height: 576px) {
