@@ -12,6 +12,7 @@
     <script type="text/javascript" src="./js/stickersEffect.js"></script>
     <script type="text/javascript" src="./js/cursor.js"></script>
     <script type="text/javascript" src="./js/main.js"></script>
+    <script type="text/javascript" src="./js/chat.js"></script>
     <title>Shubham Chandel — probably fine</title>
 </head>
 
@@ -78,8 +79,35 @@
                 </li>
             </ul>
 
+            <div class="capsule-right">
+                <span class="clickable" id="chat-trigger">
+                    talk to me
+                </span>
+            </div>
         </footer>
 
+    </div>
+
+    <!-- CHAT OVERLAY -->
+    <div class="chat-overlay" id="chat-overlay">
+        <div class="chat-chrome">
+            <div class="chat-header">
+                <div class="chat-header-left">
+                    <span class="chat-title">shubham.exe</span>
+                    <span class="chat-subtitle">fine-tuned on my actual conversations. yes, really.</span>
+                </div>
+                <span class="chat-close clickable" id="chat-close">&times;</span>
+            </div>
+            <div class="chat-messages" id="chat-messages">
+                <div class="chat-msg chat-msg-ai">
+                    <span class="chat-msg-text">hey. i'm a model trained on shubham's conversations. ask me anything — i'll answer like he would (probably).</span>
+                </div>
+            </div>
+            <div class="chat-input-area">
+                <input type="text" class="chat-input" id="chat-input" placeholder="say something..." autocomplete="off" />
+                <button class="chat-send" id="chat-send">&rarr;</button>
+            </div>
+        </div>
     </div>
     <svg class="cursor" width="20" height="20" viewBox="0 0 220 220">
         <defs>
