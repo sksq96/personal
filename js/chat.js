@@ -11,9 +11,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (!overlay || !trigger) return;
 
-    const history = [
-        { role: 'system', content: 'You are Shubham in a chat conversation. Respond naturally, keep it short and casual.' }
-    ];
+    // All messages stored as { sender: 'Visitor'|'Shubham', text, timestamp }
+    const chatLog = [];
+
+    function timestamp() {
+        return new Date().toISOString().replace('T', ' ').slice(0, 19);
+    }
 
     function open() {
         overlay.classList.add('open');
@@ -59,6 +62,29 @@ document.addEventListener('DOMContentLoaded', () => {
         return div.innerHTML;
     }
 
+    // Build the single context block from all messages
+    function buildContext() {
+        return chatLog.map(m =>
+            '[' + m.timestamp + '] ' + m.sender + ': ' + m.text
+        ).join('\n');
+    }
+
+    // Parse model output: strip timestamps/name, return array of message strings
+    function parseReply(raw) {
+        const lines = raw.split('\n');
+        const parsed = [];
+        for (const line of lines) {
+            const match = line.match(/\[\d{4}-[^\]]*\]\s*Shubham:\s*(.+)/i);
+            if (match) {
+                parsed.push(match[1].trim());
+            } else if (line.trim() && !line.match(/^\[\d{4}/)) {
+                // Line without timestamp format — include as-is
+                parsed.push(line.trim());
+            }
+        }
+        return parsed.length > 0 ? parsed : [raw.replace(/\[\d{4}-[^\]]*\]\s*\w+:\s*/g, '').trim() || "..."];
+    }
+
     async function send() {
         const text = input.value.trim();
         if (!text) return;
@@ -66,8 +92,7 @@ document.addEventListener('DOMContentLoaded', () => {
         input.value = '';
         addMessage(text, 'user');
 
-        const now = new Date().toISOString().replace('T', ' ').slice(0, 19);
-        history.push({ role: 'user', content: '[' + now + '] You: ' + text });
+        chatLog.push({ sender: 'Visitor', text: text, timestamp: timestamp() });
 
         const typing = addTyping();
 
@@ -77,7 +102,10 @@ document.addEventListener('DOMContentLoaded', () => {
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
                     model: CHAT_MODEL,
-                    messages: history,
+                    messages: [
+                        { role: 'system', content: 'You are Shubham in a chat conversation. Respond naturally.' },
+                        { role: 'user', content: buildContext() }
+                    ],
                     temperature: 0.7,
                     max_tokens: 256,
                 })
@@ -86,12 +114,14 @@ document.addEventListener('DOMContentLoaded', () => {
             const data = await res.json();
             typing.remove();
 
-            let reply = data.choices?.[0]?.message?.content || "hmm, i broke. try again.";
-            // Strip the timestamp/name prefix if the model adds one
-            reply = reply.replace(/^\[\d{4}-[^\]]+\]\s*\w+:\s*/i, '');
+            const raw = data.choices?.[0]?.message?.content || '';
+            const lines = parseReply(raw);
 
-            history.push({ role: 'assistant', content: reply });
-            addMessage(reply, 'ai');
+            // Add each line as a separate message bubble for that burst feel
+            for (const line of lines) {
+                chatLog.push({ sender: 'Shubham', text: line, timestamp: timestamp() });
+                addMessage(line, 'ai');
+            }
         } catch (err) {
             typing.remove();
             addMessage("connection failed. the server is probably napping.", 'ai');
