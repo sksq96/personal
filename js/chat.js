@@ -117,10 +117,11 @@ document.addEventListener('DOMContentLoaded', () => {
             const raw = data.choices?.[0]?.message?.content || '';
             const lines = parseReply(raw);
 
-            // Add each line as a separate message bubble for that burst feel
-            for (const line of lines) {
-                chatLog.push({ sender: 'Shubham', text: line, timestamp: timestamp() });
-                addMessage(line, 'ai');
+            // Stagger burst messages like real texting
+            for (let i = 0; i < lines.length; i++) {
+                await new Promise(r => setTimeout(r, i === 0 ? 0 : 300 + Math.random() * 200));
+                chatLog.push({ sender: 'Shubham', text: lines[i], timestamp: timestamp() });
+                addMessage(lines[i], 'ai');
             }
         } catch (err) {
             typing.remove();
