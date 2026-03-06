@@ -649,55 +649,36 @@ footer{
 
     footer {
         flex-wrap: wrap;
-        padding: 0;
+        padding: 0 var(--paddingH) 20px;
+        gap: 12px;
+        justify-content: center;
     }
     .social-media {
         order: 1;
         width: 100%;
-        padding-left: var(--paddingH);
-        padding-right: var(--paddingH);
-        padding-bottom: 25px;
+        padding-bottom: 15px;
+        justify-content: center;
+        gap: 24px;
     }
 
-    .capsule-left {
-        position: relative;
+    .capsule-left, .capsule-right {
         order: 2;
-        width: 50%;
-        border-radius: unset;
-        padding: 15px 0 15px var(--paddingH);
-        overflow: visible;
-        z-index: 2;
-        border: unset;
+        border-radius: 100px;
+        padding: 10px 20px;
+        font-size: 13px;
+        border: solid 1px #E63946;
+    }
+    .capsule-left {
+        order: 2;
     }
     .capsule-left::after {
-        content: '';
-        position: absolute;
-        width: 20px;
-        top: 0;
-        right: -20px;
-        height: 100%;
-        background-image: url('./assets/img/mobile-arrow.svg');
-        background-position: center;
-        background-repeat: no-repeat;
-        background-size: contain;
-        transition: filter 0.5s;
-    }
-    .dark-mode .capsule-left::after {
-        filter: invert(1);
-    }
-    .dark-mode .capsule-left, .dark-mode .capsule-right {
-        border: unset;
+        display: none;
     }
     .capsule-right {
         order: 3;
-        width: 50%;
-        border-radius: unset;
-        text-align: right;
-        padding: 15px var(--paddingH) 15px 0;
-        animation-delay: 1.6s;
-        overflow: visible;
-        z-index: 1;
-        border: unset;
+    }
+    .dark-mode .capsule-left, .dark-mode .capsule-right {
+        border: solid 1px #111111;
     }
     .emoji-hover {
         display: none;
