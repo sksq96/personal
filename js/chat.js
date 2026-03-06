@@ -1,4 +1,4 @@
-const CHAT_API = 'https://ensure-reservation-chemistry-seconds.trycloudflare.com/v1/chat/completions';
+const CHAT_API = 'https://firms-entertaining-stanford-enrollment.trycloudflare.com/v1/chat/completions';
 const CHAT_MODEL = '/tmp/shubham_merged_16bit';
 
 document.addEventListener('DOMContentLoaded', () => {
