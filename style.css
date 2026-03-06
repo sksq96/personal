@@ -249,9 +249,9 @@ h1 .char {
 }
 
 .main-sentence{
-    font-size: 15px;
+    font-size: 16px;
     font-family: 'Space Grotesk', sans-serif;
-    font-weight: 500;
+    font-weight: 700;
     margin-top: 35px;
     margin-bottom: 12px;
     text-transform: uppercase;
@@ -263,8 +263,10 @@ h1 .char {
 
 .description-okey{
     width: 440px;
-    font-size: 12px;
+    font-size: 13px;
     line-height: 19px;
+    font-weight: 500;
+    color: #EFEFEF;
     opacity: 0.01;
     transform: translateY(33px);
     animation: mainApparition 0.75s forwards 0.7s cubic-bezier(0.250, 0.460, 0.450, 0.940);
