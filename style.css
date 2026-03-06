@@ -693,7 +693,7 @@ footer{
     .description-okey {
         width: 90%;
     }
-    
+
     .header-center {
         display: none;
     }
@@ -702,6 +702,9 @@ footer{
     }
     .mobile-logo {
         display: block;
+    }
+    .cursorTxt {
+        display: none !important;
     }
 }
 

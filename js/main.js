@@ -6,13 +6,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const cursorTxt = document.querySelector('.cursorTxt');
     const cursorHtmlEl = document.querySelector('.cursor');
+    const main = document.querySelector('main');
 
+    // Stickers work on both mobile (tap) and desktop (click)
+    const stickersEffect = new StickersEffect(main, cursorTxt);
+    stickersEffect.init();
+
+    // Custom cursor only on desktop (pointer device)
     if (cursorHtmlEl && cursorHtmlEl.clientWidth) {
-        const main = document.querySelector('main');
-
-        const stickersEffect = new StickersEffect(main, cursorTxt);
-        stickersEffect.init();
-
         const cursor = new Cursor(cursorHtmlEl, cursorTxt);
         [...document.querySelectorAll('.clickable')].forEach(el => {
             el.addEventListener('mouseenter', () => cursor.enter());
