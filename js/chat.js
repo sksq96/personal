@@ -8,11 +8,14 @@ document.addEventListener('DOMContentLoaded', () => {
     const input = document.getElementById('chat-input');
     const sendBtn = document.getElementById('chat-send');
     const messagesEl = document.getElementById('chat-messages');
+    const splash = document.getElementById('chat-splash');
+    const chatBody = document.getElementById('chat-body');
+    const splashCta = document.getElementById('chat-splash-cta');
 
     if (!overlay || !trigger) return;
 
-    // All messages stored as { sender: 'Rebecca'|'Shubham', text, timestamp }
     const chatLog = [];
+    let chatStarted = false;
 
     function timestamp() {
         return new Date().toISOString().replace('T', ' ').slice(0, 19);
@@ -21,7 +24,9 @@ document.addEventListener('DOMContentLoaded', () => {
     function open() {
         overlay.classList.add('open');
         document.body.style.overflow = 'hidden';
-        setTimeout(() => input.focus(), 400);
+        if (chatStarted) {
+            setTimeout(() => input.focus(), 400);
+        }
     }
 
     function close() {
@@ -29,8 +34,16 @@ document.addEventListener('DOMContentLoaded', () => {
         document.body.style.overflow = '';
     }
 
+    function startChat() {
+        chatStarted = true;
+        splash.classList.add('hidden');
+        chatBody.classList.add('active');
+        setTimeout(() => input.focus(), 300);
+    }
+
     trigger.addEventListener('click', open);
     closeBtn.addEventListener('click', close);
+    splashCta.addEventListener('click', startChat);
     overlay.addEventListener('click', (e) => {
         if (e.target === overlay) close();
     });
@@ -62,14 +75,12 @@ document.addEventListener('DOMContentLoaded', () => {
         return div.innerHTML;
     }
 
-    // Build the single context block from all messages
     function buildContext() {
         return chatLog.map(m =>
             '[' + m.timestamp + '] ' + m.sender + ': ' + m.text
         ).join('\n');
     }
 
-    // Parse model output: strip timestamps/name, return array of message strings
     function parseReply(raw) {
         const lines = raw.split('\n');
         const parsed = [];
@@ -78,7 +89,6 @@ document.addEventListener('DOMContentLoaded', () => {
             if (match) {
                 parsed.push(match[1].trim());
             } else if (line.trim() && !line.match(/^\[\d{4}/)) {
-                // Line without timestamp format — include as-is
                 parsed.push(line.trim());
             }
         }
@@ -89,9 +99,11 @@ document.addEventListener('DOMContentLoaded', () => {
         const text = input.value.trim();
         if (!text) return;
 
+        // If splash is still showing, transition to chat
+        if (!chatStarted) startChat();
+
         input.value = '';
         addMessage(text, 'user');
-
         chatLog.push({ sender: 'Rebecca', text: text, timestamp: timestamp() });
 
         const typing = addTyping();
@@ -107,7 +119,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         { role: 'user', content: buildContext() }
                     ],
                     temperature: 0.7,
-                    max_tokens: 256,
+                    max_tokens: 150,
                 })
             });
 
@@ -117,7 +129,6 @@ document.addEventListener('DOMContentLoaded', () => {
             const raw = data.choices?.[0]?.message?.content || '';
             const lines = parseReply(raw);
 
-            // Stagger burst messages like real texting
             for (let i = 0; i < lines.length; i++) {
                 await new Promise(r => setTimeout(r, i === 0 ? 0 : 300 + Math.random() * 200));
                 chatLog.push({ sender: 'Shubham', text: lines[i], timestamp: timestamp() });

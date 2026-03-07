@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Inter:wght@400;500;700;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="./style.css" />
     <script type="text/javascript" src="./js/stickersEffect.js"></script>
     <script type="text/javascript" src="./js/cursor.js"></script>
@@ -94,21 +94,18 @@
     <!-- CHAT OVERLAY -->
     <div class="chat-overlay" id="chat-overlay">
         <div class="chat-chrome">
-            <div class="chat-header">
-                <div class="chat-header-left">
-                    <span class="chat-title">shubham.exe</span>
-                    <span class="chat-subtitle">trained on my actual texts. no filter. no safety net. good luck.</span>
-                </div>
-                <span class="chat-close clickable" id="chat-close">&times;</span>
+            <span class="chat-close clickable" id="chat-close">&times;</span>
+            <div class="chat-splash" id="chat-splash">
+                <div class="chat-splash-title">NOT<br>SHUBHAM</div>
+                <div class="chat-splash-sub">an ai that absorbed all his texts.<br>it talks like him. thinks like him.<br>but it's not him. probably.</div>
+                <div class="chat-splash-cta" id="chat-splash-cta">start talking &darr;</div>
             </div>
-            <div class="chat-messages" id="chat-messages">
-                <div class="chat-msg chat-msg-ai">
-                    <span class="chat-msg-text">this thing learned to talk by reading all of shubham's messages. it has no shame. ask it anything.</span>
+            <div class="chat-body" id="chat-body">
+                <div class="chat-messages" id="chat-messages"></div>
+                <div class="chat-input-area">
+                    <input type="text" class="chat-input" id="chat-input" placeholder="say something..." autocomplete="off" />
+                    <button class="chat-send" id="chat-send">&rarr;</button>
                 </div>
-            </div>
-            <div class="chat-input-area">
-                <input type="text" class="chat-input" id="chat-input" placeholder="say something..." autocomplete="off" />
-                <button class="chat-send" id="chat-send">&rarr;</button>
             </div>
         </div>
     </div>
