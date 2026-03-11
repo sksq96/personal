@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8" />
-    <meta name="description" content="Shubham's Internet — 1,600+ links curated from the web." />
+    <meta name="description" content="Shubham's Internet — 2,000+ links curated from the web." />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -29,7 +29,6 @@
             min-height: 100%;
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
-            transition: background-color 0.6s ease, color 0.6s ease;
         }
 
         .container {
@@ -51,15 +50,6 @@
             transform: translateY(10px);
             animation: apparition 1s forwards 0.2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
         }
-        .back {
-            font-size: 13px;
-            font-weight: 500;
-            letter-spacing: 0.08em;
-            color: var(--fg-dim);
-            text-decoration: none;
-            transition: color 0.3s;
-        }
-        .back:hover { color: var(--accent); }
         .monogram {
             font-size: 18px;
             font-weight: 700;
@@ -96,6 +86,7 @@
             letter-spacing: 0.08em;
             color: var(--fg-dim);
             margin-top: 20px;
+            text-transform: none;
             opacity: 0.01;
             transform: translateY(15px);
             animation: apparition 0.8s forwards 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
@@ -108,7 +99,12 @@
             transform: translateY(10px);
             animation: apparition 0.8s forwards 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
         }
+        .search-row {
+            display: flex;
+            gap: 10px;
+        }
         .search-box {
+            flex: 1;
             display: flex;
             align-items: center;
             border: 1px solid var(--border);
@@ -117,12 +113,6 @@
             transition: border-color 0.3s;
         }
         .search-box:focus-within { border-color: rgba(239, 239, 239, 0.25); }
-        .search-icon {
-            color: var(--fg-dim);
-            font-size: 14px;
-            margin-right: 12px;
-            flex-shrink: 0;
-        }
         .search-input {
             flex: 1;
             background: none;
@@ -131,140 +121,97 @@
             font-family: 'Space Grotesk', sans-serif;
             font-size: 14px;
             font-weight: 500;
-            letter-spacing: 0.04em;
+            letter-spacing: 0.02em;
             color: var(--fg);
-            text-transform: uppercase;
+            text-transform: none;
             padding: 14px 0;
             caret-color: var(--accent);
+            width: 100%;
         }
-        .search-input::placeholder { color: var(--fg-dim); }
-        .search-meta {
-            display: flex;
-            justify-content: space-between;
-            margin-top: 12px;
-            font-size: 11px;
-            letter-spacing: 0.06em;
-            color: var(--fg-dim);
-        }
-        .search-meta .shortcut {
-            opacity: 0.5;
-        }
-        .clear-btn {
-            background: none;
-            border: none;
-            color: var(--fg-dim);
-            font-family: 'Space Grotesk', sans-serif;
-            font-size: 11px;
-            letter-spacing: 0.06em;
-            text-transform: uppercase;
-            cursor: pointer;
-            transition: color 0.2s;
-            display: none;
-        }
-        .clear-btn.visible { display: inline; }
-        .clear-btn:hover { color: var(--accent); }
-
-        /* TABS */
-        .tabs {
-            display: flex;
-            gap: 0;
-            margin-bottom: 30px;
-            border-bottom: 1px solid var(--border);
-            opacity: 0.01;
-            transform: translateY(10px);
-            animation: apparition 0.8s forwards 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-        }
-        .tab {
-            background: none;
-            border: none;
-            font-family: 'Space Grotesk', sans-serif;
-            font-size: 12px;
-            font-weight: 500;
-            letter-spacing: 0.1em;
-            text-transform: uppercase;
-            color: var(--fg-dim);
-            padding: 10px 20px;
-            cursor: pointer;
-            position: relative;
-            transition: color 0.3s;
-        }
-        .tab:first-child { padding-left: 0; }
-        .tab:hover { color: var(--fg-mid); }
-        .tab.active { color: var(--fg); }
-        .tab.active::after {
-            content: '';
-            position: absolute;
-            bottom: -1px;
-            left: 0;
-            right: 0;
-            height: 1px;
+        .search-input::placeholder { color: var(--fg-dim); text-transform: none; }
+        .search-btn {
             background: var(--accent);
+            border: none;
+            border-radius: 4px;
+            color: var(--fg);
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 13px;
+            font-weight: 500;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            padding: 14px 24px;
+            cursor: pointer;
+            transition: opacity 0.2s;
+            white-space: nowrap;
+            flex-shrink: 0;
         }
-        .tab:first-child.active::after { left: 0; }
-        .tab-count {
-            font-size: 10px;
-            opacity: 0.5;
-            margin-left: 4px;
-        }
+        .search-btn:hover { opacity: 0.85; }
+        .search-btn:disabled { opacity: 0.4; cursor: default; }
 
-        /* LINKS LIST */
-        .links-list {
+        /* RESULTS */
+        .results {
             opacity: 0.01;
             transform: translateY(10px);
-            animation: apparition 0.8s forwards 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            animation: apparition 0.5s forwards cubic-bezier(0.25, 0.46, 0.45, 0.94);
         }
-        .link-item {
-            display: flex;
-            justify-content: space-between;
-            align-items: baseline;
-            gap: 24px;
+        .result-item {
+            display: block;
             padding: 16px 0;
             border-bottom: 1px solid var(--border);
             text-decoration: none;
-            color: var(--fg);
-            transition: all 0.2s ease;
+            transition: padding-left 0.2s ease;
         }
-        .link-item:hover {
-            padding-left: 8px;
-        }
-        .link-item:hover .link-title { color: var(--accent); }
-        .link-title {
+        .result-item:hover { padding-left: 8px; }
+        .result-item:hover .result-title { color: var(--accent); }
+        .result-title {
             font-size: 17px;
             font-weight: 500;
             letter-spacing: 0.01em;
             line-height: 1.4;
             color: var(--fg);
             transition: color 0.2s;
-            min-width: 0;
             text-transform: none;
+            word-break: break-word;
         }
-        .link-date {
-            font-size: 12px;
-            letter-spacing: 0.06em;
+        .result-meta {
+            display: flex;
+            gap: 16px;
+            margin-top: 6px;
+            font-size: 11px;
+            letter-spacing: 0.04em;
             color: var(--fg-dim);
+            text-transform: none;
+            flex-wrap: wrap;
+        }
+        .result-desc {
+            font-size: 13px;
+            color: var(--fg-mid);
+            text-transform: none;
+            line-height: 1.5;
+            margin-top: 6px;
+            word-break: break-word;
+        }
+        .result-url {
+            overflow: hidden;
+            text-overflow: ellipsis;
             white-space: nowrap;
-            flex-shrink: 0;
+            max-width: 100%;
         }
 
-        /* EMPTY STATE */
-        .empty {
+        /* STATUS */
+        .status {
             text-align: center;
             padding: 60px 0;
             color: var(--fg-dim);
             font-size: 13px;
-            letter-spacing: 0.06em;
-        }
-
-        /* LOADING */
-        .loading {
-            text-align: center;
-            padding: 80px 0;
+            letter-spacing: 0.04em;
+            text-transform: none;
         }
         .loading-bar {
             width: 60px;
             height: 2px;
             background: var(--border);
-            margin: 0 auto;
+            margin: 16px auto 0;
             border-radius: 1px;
             overflow: hidden;
         }
@@ -289,7 +236,6 @@
             opacity: 0.5;
         }
 
-        /* ANIMATIONS */
         @keyframes apparition {
             to { opacity: 1; transform: translateY(0); }
         }
@@ -301,16 +247,22 @@
 
         /* RESPONSIVE */
         @media (max-width: 768px) {
-            .container { padding: 24px 20px 60px; }
-            .hero h1 { font-size: 72px; }
-            .hero { margin-bottom: 36px; }
-            header { margin-bottom: 40px; }
-            .link-item { flex-direction: column; gap: 4px; }
-            .link-date { align-self: flex-start; }
+            .container { padding: 24px 16px 60px; }
+            .hero h1 { font-size: 64px; }
+            .hero { margin-bottom: 32px; }
+            .hero p { font-size: 11px; margin-top: 14px; }
+            header { margin-bottom: 36px; }
+            .search-input { font-size: 16px; padding: 12px 0; }
+            .search-btn { padding: 12px 20px; }
+            .result-title { font-size: 15px; }
+            .result-meta { flex-direction: column; gap: 2px; }
+            .result-desc { font-size: 12px; }
         }
         @media (max-width: 480px) {
-            .hero h1 { font-size: 52px; }
-            .tabs { overflow-x: auto; }
+            .hero h1 { font-size: 48px; }
+            .search-row { flex-direction: column; }
+            .search-btn { padding: 14px; text-align: center; }
+            .result-title { font-size: 14px; }
         }
     </style>
 </head>
@@ -327,27 +279,18 @@
         </div>
 
         <div class="search-wrap">
-            <div class="search-box">
-                <span class="search-icon">&#8981;</span>
-                <input class="search-input" id="search" type="text" placeholder="Search..." autocomplete="off" />
-            </div>
-            <div class="search-meta">
-                <button class="clear-btn" id="clear-btn" onclick="clearSearch()">Clear</button>
-                <span class="shortcut" id="search-hint"></span>
+            <div class="search-row">
+                <div class="search-box">
+                    <input class="search-input" id="search" type="text" placeholder="Ask anything..." autocomplete="off" />
+                </div>
+                <button class="search-btn" id="search-btn" onclick="doSearch()">Search</button>
             </div>
         </div>
 
-        <div class="tabs" id="tabs">
-            <button class="tab active" data-tab="all">All</button>
-            <button class="tab" data-tab="ml">ML</button>
-            <button class="tab" data-tab="arxiv">Arxiv</button>
-            <button class="tab" data-tab="other">Other</button>
-        </div>
+        <div id="results"></div>
 
-        <div class="links-list" id="links-list">
-            <div class="loading">
-                <div class="loading-bar"></div>
-            </div>
+        <div id="all-links">
+            <div class="status">Loading...<div class="loading-bar"></div></div>
         </div>
 
         <div class="page-footer">
@@ -357,188 +300,154 @@
 
     <script>
     (function () {
-        let allLinks = [];
-        let filtered = [];
-        let activeTab = 'all';
-        let query = '';
+        var AI_SERVER = 'https://shubham-links.ngrok.app';
 
-        const listEl = document.getElementById('links-list');
-        const searchEl = document.getElementById('search');
-        const clearBtn = document.getElementById('clear-btn');
-        const countEl = document.getElementById('total-count');
-        const hintEl = document.getElementById('search-hint');
+        var searchEl = document.getElementById('search');
+        var btnEl = document.getElementById('search-btn');
+        var resultsEl = document.getElementById('results');
+        var allLinksEl = document.getElementById('all-links');
+        var countEl = document.getElementById('total-count');
+        var searching = false;
+        var allLinks = [];
 
-        const ML_KEYWORDS = ['rl ', 'ml ', 'ai ', 'llm', 'model', 'sft', 'deepseek', 'cuda', 'agi', 'torch', 'training', 'agent', 'bert', 'gpu', 'llama', 'jax', 'transformer', 'reinforcement', 'gradient', 'tensor', 'neural', 'token', 'anthropic', 'machine learning', 'grpo', 'gpt', 'hugging', 'deepmind', 'attention', 'openai'];
-
-        function isML(entry) {
-            const t = (entry.title || '').toLowerCase();
-            return ML_KEYWORDS.some(k => t.includes(k));
-        }
-        function isArxiv(entry) {
-            return (entry.url || '').toLowerCase().includes('arxiv');
+        function escapeHtml(s) {
+            var d = document.createElement('div');
+            d.textContent = s;
+            return d.innerHTML;
         }
 
         function formatDate(raw) {
             if (!raw) return '';
             try {
-                const d = new Date(raw);
+                var d = new Date(raw);
                 if (isNaN(d.getTime())) return '';
-                const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+                var months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
                 return months[d.getMonth()] + ' ' + d.getDate() + ', ' + d.getFullYear();
             } catch (e) { return ''; }
         }
 
-        function categorize(entry) {
-            if (isArxiv(entry)) return 'arxiv';
-            if (isML(entry)) return 'ml';
-            return 'other';
+        function shortenUrl(url) {
+            try {
+                var u = new URL(url);
+                var path = u.pathname.length > 30 ? u.pathname.slice(0, 30) + '...' : u.pathname;
+                return u.hostname + path;
+            } catch (e) { return url; }
         }
 
-        function applyFilters() {
-            const q = query.toLowerCase();
-            filtered = allLinks.filter(entry => {
-                // Tab filter
-                if (activeTab !== 'all') {
-                    const cat = categorize(entry);
-                    if (cat !== activeTab) return false;
-                }
-                // Search filter
-                if (q) {
-                    const title = (entry.title || '').toLowerCase();
-                    const url = (entry.url || '').toLowerCase();
-                    return title.includes(q) || url.includes(q);
-                }
-                return true;
+        function renderLink(r, showDesc) {
+            var date = formatDate(r.date);
+            var html = '<a class="result-item" href="' + escapeHtml(r.url) + '" target="_blank" rel="noopener">';
+            html += '<div class="result-title">' + escapeHtml(r.title) + '</div>';
+            if (showDesc && r.description) {
+                html += '<div class="result-desc">' + escapeHtml(r.description).slice(0, 200) + '</div>';
+            }
+            html += '<div class="result-meta">';
+            if (showDesc) html += '<span class="result-url">' + escapeHtml(shortenUrl(r.url)) + '</span>';
+            if (date) html += '<span>' + date + '</span>';
+            html += '</div></a>';
+            return html;
+        }
+
+        function renderAllLinks() {
+            if (allLinks.length === 0) return;
+            var html = '<div class="results">';
+            var batch = allLinks.slice(0, 200);
+            for (var i = 0; i < batch.length; i++) {
+                html += renderLink(batch[i], false);
+            }
+            if (allLinks.length > 200) {
+                html += '<div class="status" id="load-more" style="cursor:pointer;padding:30px 0">Show all ' + allLinks.length + ' links</div>';
+            }
+            html += '</div>';
+            allLinksEl.innerHTML = html;
+            if (allLinks.length > 200) {
+                document.getElementById('load-more').addEventListener('click', function () {
+                    var h = '<div class="results">';
+                    for (var j = 0; j < allLinks.length; j++) {
+                        h += renderLink(allLinks[j], false);
+                    }
+                    h += '</div>';
+                    allLinksEl.innerHTML = h;
+                });
+            }
+        }
+
+        // Load all links — try server first, fall back to static
+        fetch(AI_SERVER + '/api/links')
+            .then(function (r) { if (!r.ok) throw 0; return r.json(); })
+            .catch(function () { return fetch('/links/links.json').then(function (r) { return r.json(); }); })
+            .then(function (data) {
+                allLinks = data;
+                countEl.textContent = data.length + ' links';
+                renderAllLinks();
+            })
+            .catch(function () {
+                allLinksEl.innerHTML = '<div class="status">Failed to load links</div>';
             });
-        }
 
-        function render() {
-            applyFilters();
+        // AI search
+        window.doSearch = async function () {
+            var q = searchEl.value.trim();
+            if (!q || searching) return;
 
-            // Update count
-            hintEl.textContent = query
-                ? filtered.length + ' result' + (filtered.length !== 1 ? 's' : '')
-                : filtered.length + ' links';
-            clearBtn.classList.toggle('visible', query.length > 0);
+            searching = true;
+            btnEl.disabled = true;
+            btnEl.textContent = '...';
+            allLinksEl.style.display = 'none';
+            resultsEl.innerHTML = '<div class="status">Searching through ' + allLinks.length + '+ links...<div class="loading-bar"></div></div>';
 
-            if (filtered.length === 0) {
-                listEl.innerHTML = '<div class="empty">No links found</div>';
-                return;
+            try {
+                var resp = await fetch(AI_SERVER + '/api/search', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ query: q }),
+                });
+                var data = await resp.json();
+                var results = data.results || [];
+
+                if (results.length === 0) {
+                    resultsEl.innerHTML = '<div class="status">No links found for that query.</div>';
+                    return;
+                }
+
+                var html = '<div class="results">';
+                for (var i = 0; i < results.length; i++) {
+                    html += renderLink(results[i], true);
+                }
+                html += '</div>';
+                resultsEl.innerHTML = html;
+
+            } catch (e) {
+                resultsEl.innerHTML = '<div class="status">Search server is offline.</div>';
+            } finally {
+                searching = false;
+                btnEl.disabled = false;
+                btnEl.textContent = 'Search';
             }
-
-            // Render only first 200 for performance, lazy-load more on scroll
-            const batch = filtered.slice(0, 200);
-            let html = '';
-            for (const entry of batch) {
-                const date = formatDate(entry.date);
-                const title = escapeHtml(entry.title || entry.url);
-                html += '<a class="link-item" href="' + escapeAttr(entry.url) + '" target="_blank" rel="noopener">'
-                    + '<span class="link-title">' + title + '</span>'
-                    + (date ? '<span class="link-date">' + date + '</span>' : '')
-                    + '</a>';
-            }
-            if (filtered.length > 200) {
-                html += '<div class="empty" id="load-more" style="cursor:pointer">Show more (' + (filtered.length - 200) + ' remaining)</div>';
-            }
-            listEl.innerHTML = html;
-
-            if (filtered.length > 200) {
-                document.getElementById('load-more').addEventListener('click', renderAll);
-            }
-        }
-
-        function renderAll() {
-            let html = '';
-            for (const entry of filtered) {
-                const date = formatDate(entry.date);
-                const title = escapeHtml(entry.title || entry.url);
-                html += '<a class="link-item" href="' + escapeAttr(entry.url) + '" target="_blank" rel="noopener">'
-                    + '<span class="link-title">' + title + '</span>'
-                    + (date ? '<span class="link-date">' + date + '</span>' : '')
-                    + '</a>';
-            }
-            listEl.innerHTML = html;
-        }
-
-        function escapeHtml(s) {
-            const d = document.createElement('div');
-            d.textContent = s;
-            return d.innerHTML;
-        }
-        function escapeAttr(s) {
-            return s.replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
-        }
-
-        // Search
-        let debounceTimer;
-        searchEl.addEventListener('input', function () {
-            clearTimeout(debounceTimer);
-            debounceTimer = setTimeout(function () {
-                query = searchEl.value.trim();
-                render();
-            }, 150);
-        });
-
-        window.clearSearch = function () {
-            searchEl.value = '';
-            query = '';
-            render();
-            searchEl.focus();
         };
 
-        // Keyboard shortcut
+        function clearResults() {
+            searchEl.value = '';
+            resultsEl.innerHTML = '';
+            allLinksEl.style.display = '';
+        }
+
+        searchEl.addEventListener('keydown', function (e) {
+            if (e.key === 'Enter') doSearch();
+            if (e.key === 'Escape') { clearResults(); searchEl.blur(); }
+        });
+
+        searchEl.addEventListener('input', function () {
+            if (!searchEl.value.trim()) clearResults();
+        });
+
         document.addEventListener('keydown', function (e) {
             if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
                 e.preventDefault();
                 searchEl.focus();
                 searchEl.select();
             }
-            if (e.key === 'Escape') {
-                if (document.activeElement === searchEl) {
-                    searchEl.blur();
-                } else if (query) {
-                    clearSearch();
-                }
-            }
         });
-
-        // Tabs
-        document.getElementById('tabs').addEventListener('click', function (e) {
-            const btn = e.target.closest('.tab');
-            if (!btn) return;
-            document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-            btn.classList.add('active');
-            activeTab = btn.dataset.tab;
-            render();
-        });
-
-        // Load data
-        fetch('/links/links.json')
-            .then(r => r.json())
-            .then(function (data) {
-                allLinks = data;
-                countEl.textContent = allLinks.length + ' links';
-
-                // Update tab counts
-                const counts = { all: allLinks.length, ml: 0, arxiv: 0, other: 0 };
-                allLinks.forEach(function (e) {
-                    const cat = categorize(e);
-                    counts[cat]++;
-                });
-
-                document.querySelectorAll('.tab').forEach(function (tab) {
-                    const key = tab.dataset.tab;
-                    const span = document.createElement('span');
-                    span.className = 'tab-count';
-                    span.textContent = counts[key];
-                    tab.appendChild(span);
-                });
-
-                render();
-            })
-            .catch(function () {
-                listEl.innerHTML = '<div class="empty">Failed to load links</div>';
-            });
     })();
     </script>
 </body>
