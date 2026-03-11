@@ -1,0 +1,545 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="description" content="Shubham's Internet — 1,600+ links curated from the web." />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet">
+    <title>Links — Shubham Chandel</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Space Grotesk', sans-serif;
+            text-transform: uppercase;
+        }
+        html { height: 100%; }
+        body {
+            --accent: #E63946;
+            --bg: #0a0a0a;
+            --fg: #EFEFEF;
+            --fg-dim: rgba(239, 239, 239, 0.45);
+            --fg-mid: rgba(239, 239, 239, 0.7);
+            --border: rgba(239, 239, 239, 0.08);
+            background-color: var(--bg);
+            color: var(--fg);
+            min-height: 100%;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            transition: background-color 0.6s ease, color 0.6s ease;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 36px 36px 80px;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* HEADER */
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 60px;
+            opacity: 0.01;
+            transform: translateY(10px);
+            animation: apparition 1s forwards 0.2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+        .back {
+            font-size: 13px;
+            font-weight: 500;
+            letter-spacing: 0.08em;
+            color: var(--fg-dim);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        .back:hover { color: var(--accent); }
+        .monogram {
+            font-size: 18px;
+            font-weight: 700;
+            letter-spacing: 0.05em;
+            color: var(--fg);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        .monogram:hover { color: var(--accent); }
+        .count {
+            font-size: 13px;
+            font-weight: 500;
+            letter-spacing: 0.08em;
+            color: var(--fg-dim);
+        }
+
+        /* HERO */
+        .hero {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+        .hero h1 {
+            font-weight: 700;
+            font-size: 120px;
+            line-height: 0.9;
+            letter-spacing: -0.02em;
+            text-shadow: 2px 2px 0px var(--accent), 4px 4px 0px rgba(230,57,70,0.15);
+            opacity: 0.01;
+            transform: translateY(30px);
+            animation: apparition 0.8s forwards 0.1s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+        .hero p {
+            font-size: 12px;
+            letter-spacing: 0.08em;
+            color: var(--fg-dim);
+            margin-top: 20px;
+            opacity: 0.01;
+            transform: translateY(15px);
+            animation: apparition 0.8s forwards 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        /* SEARCH */
+        .search-wrap {
+            margin-bottom: 40px;
+            opacity: 0.01;
+            transform: translateY(10px);
+            animation: apparition 0.8s forwards 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+        .search-box {
+            display: flex;
+            align-items: center;
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            padding: 0 16px;
+            transition: border-color 0.3s;
+        }
+        .search-box:focus-within { border-color: rgba(239, 239, 239, 0.25); }
+        .search-icon {
+            color: var(--fg-dim);
+            font-size: 14px;
+            margin-right: 12px;
+            flex-shrink: 0;
+        }
+        .search-input {
+            flex: 1;
+            background: none;
+            border: none;
+            outline: none;
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 14px;
+            font-weight: 500;
+            letter-spacing: 0.04em;
+            color: var(--fg);
+            text-transform: uppercase;
+            padding: 14px 0;
+            caret-color: var(--accent);
+        }
+        .search-input::placeholder { color: var(--fg-dim); }
+        .search-meta {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 12px;
+            font-size: 11px;
+            letter-spacing: 0.06em;
+            color: var(--fg-dim);
+        }
+        .search-meta .shortcut {
+            opacity: 0.5;
+        }
+        .clear-btn {
+            background: none;
+            border: none;
+            color: var(--fg-dim);
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 11px;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: color 0.2s;
+            display: none;
+        }
+        .clear-btn.visible { display: inline; }
+        .clear-btn:hover { color: var(--accent); }
+
+        /* TABS */
+        .tabs {
+            display: flex;
+            gap: 0;
+            margin-bottom: 30px;
+            border-bottom: 1px solid var(--border);
+            opacity: 0.01;
+            transform: translateY(10px);
+            animation: apparition 0.8s forwards 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+        .tab {
+            background: none;
+            border: none;
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 12px;
+            font-weight: 500;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--fg-dim);
+            padding: 10px 20px;
+            cursor: pointer;
+            position: relative;
+            transition: color 0.3s;
+        }
+        .tab:first-child { padding-left: 0; }
+        .tab:hover { color: var(--fg-mid); }
+        .tab.active { color: var(--fg); }
+        .tab.active::after {
+            content: '';
+            position: absolute;
+            bottom: -1px;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: var(--accent);
+        }
+        .tab:first-child.active::after { left: 0; }
+        .tab-count {
+            font-size: 10px;
+            opacity: 0.5;
+            margin-left: 4px;
+        }
+
+        /* LINKS LIST */
+        .links-list {
+            opacity: 0.01;
+            transform: translateY(10px);
+            animation: apparition 0.8s forwards 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+        .link-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            gap: 24px;
+            padding: 16px 0;
+            border-bottom: 1px solid var(--border);
+            text-decoration: none;
+            color: var(--fg);
+            transition: all 0.2s ease;
+        }
+        .link-item:hover {
+            padding-left: 8px;
+        }
+        .link-item:hover .link-title { color: var(--accent); }
+        .link-title {
+            font-size: 17px;
+            font-weight: 500;
+            letter-spacing: 0.01em;
+            line-height: 1.4;
+            color: var(--fg);
+            transition: color 0.2s;
+            min-width: 0;
+            text-transform: none;
+        }
+        .link-date {
+            font-size: 12px;
+            letter-spacing: 0.06em;
+            color: var(--fg-dim);
+            white-space: nowrap;
+            flex-shrink: 0;
+        }
+
+        /* EMPTY STATE */
+        .empty {
+            text-align: center;
+            padding: 60px 0;
+            color: var(--fg-dim);
+            font-size: 13px;
+            letter-spacing: 0.06em;
+        }
+
+        /* LOADING */
+        .loading {
+            text-align: center;
+            padding: 80px 0;
+        }
+        .loading-bar {
+            width: 60px;
+            height: 2px;
+            background: var(--border);
+            margin: 0 auto;
+            border-radius: 1px;
+            overflow: hidden;
+        }
+        .loading-bar::after {
+            content: '';
+            display: block;
+            width: 30px;
+            height: 100%;
+            background: var(--accent);
+            border-radius: 1px;
+            animation: loadSlide 1s infinite ease-in-out;
+        }
+
+        /* FOOTER */
+        .page-footer {
+            margin-top: auto;
+            padding-top: 60px;
+            text-align: center;
+            font-size: 11px;
+            letter-spacing: 0.06em;
+            color: var(--fg-dim);
+            opacity: 0.5;
+        }
+
+        /* ANIMATIONS */
+        @keyframes apparition {
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes loadSlide {
+            0% { transform: translateX(-30px); }
+            50% { transform: translateX(60px); }
+            100% { transform: translateX(-30px); }
+        }
+
+        /* RESPONSIVE */
+        @media (max-width: 768px) {
+            .container { padding: 24px 20px 60px; }
+            .hero h1 { font-size: 72px; }
+            .hero { margin-bottom: 36px; }
+            header { margin-bottom: 40px; }
+            .link-item { flex-direction: column; gap: 4px; }
+            .link-date { align-self: flex-start; }
+        }
+        @media (max-width: 480px) {
+            .hero h1 { font-size: 52px; }
+            .tabs { overflow-x: auto; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <a class="monogram" href="/">SC</a>
+            <span class="count" id="total-count"></span>
+        </header>
+
+        <div class="hero">
+            <h1>LINKS</h1>
+            <p>things i've read, saved, and thought about</p>
+        </div>
+
+        <div class="search-wrap">
+            <div class="search-box">
+                <span class="search-icon">&#8981;</span>
+                <input class="search-input" id="search" type="text" placeholder="Search..." autocomplete="off" />
+            </div>
+            <div class="search-meta">
+                <button class="clear-btn" id="clear-btn" onclick="clearSearch()">Clear</button>
+                <span class="shortcut" id="search-hint"></span>
+            </div>
+        </div>
+
+        <div class="tabs" id="tabs">
+            <button class="tab active" data-tab="all">All</button>
+            <button class="tab" data-tab="ml">ML</button>
+            <button class="tab" data-tab="arxiv">Arxiv</button>
+            <button class="tab" data-tab="other">Other</button>
+        </div>
+
+        <div class="links-list" id="links-list">
+            <div class="loading">
+                <div class="loading-bar"></div>
+            </div>
+        </div>
+
+        <div class="page-footer">
+            shubham.lol
+        </div>
+    </div>
+
+    <script>
+    (function () {
+        let allLinks = [];
+        let filtered = [];
+        let activeTab = 'all';
+        let query = '';
+
+        const listEl = document.getElementById('links-list');
+        const searchEl = document.getElementById('search');
+        const clearBtn = document.getElementById('clear-btn');
+        const countEl = document.getElementById('total-count');
+        const hintEl = document.getElementById('search-hint');
+
+        const ML_KEYWORDS = ['rl ', 'ml ', 'ai ', 'llm', 'model', 'sft', 'deepseek', 'cuda', 'agi', 'torch', 'training', 'agent', 'bert', 'gpu', 'llama', 'jax', 'transformer', 'reinforcement', 'gradient', 'tensor', 'neural', 'token', 'anthropic', 'machine learning', 'grpo', 'gpt', 'hugging', 'deepmind', 'attention', 'openai'];
+
+        function isML(entry) {
+            const t = (entry.title || '').toLowerCase();
+            return ML_KEYWORDS.some(k => t.includes(k));
+        }
+        function isArxiv(entry) {
+            return (entry.url || '').toLowerCase().includes('arxiv');
+        }
+
+        function formatDate(raw) {
+            if (!raw) return '';
+            try {
+                const d = new Date(raw);
+                if (isNaN(d.getTime())) return '';
+                const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+                return months[d.getMonth()] + ' ' + d.getDate() + ', ' + d.getFullYear();
+            } catch (e) { return ''; }
+        }
+
+        function categorize(entry) {
+            if (isArxiv(entry)) return 'arxiv';
+            if (isML(entry)) return 'ml';
+            return 'other';
+        }
+
+        function applyFilters() {
+            const q = query.toLowerCase();
+            filtered = allLinks.filter(entry => {
+                // Tab filter
+                if (activeTab !== 'all') {
+                    const cat = categorize(entry);
+                    if (cat !== activeTab) return false;
+                }
+                // Search filter
+                if (q) {
+                    const title = (entry.title || '').toLowerCase();
+                    const url = (entry.url || '').toLowerCase();
+                    return title.includes(q) || url.includes(q);
+                }
+                return true;
+            });
+        }
+
+        function render() {
+            applyFilters();
+
+            // Update count
+            hintEl.textContent = query
+                ? filtered.length + ' result' + (filtered.length !== 1 ? 's' : '')
+                : filtered.length + ' links';
+            clearBtn.classList.toggle('visible', query.length > 0);
+
+            if (filtered.length === 0) {
+                listEl.innerHTML = '<div class="empty">No links found</div>';
+                return;
+            }
+
+            // Render only first 200 for performance, lazy-load more on scroll
+            const batch = filtered.slice(0, 200);
+            let html = '';
+            for (const entry of batch) {
+                const date = formatDate(entry.date);
+                const title = escapeHtml(entry.title || entry.url);
+                html += '<a class="link-item" href="' + escapeAttr(entry.url) + '" target="_blank" rel="noopener">'
+                    + '<span class="link-title">' + title + '</span>'
+                    + (date ? '<span class="link-date">' + date + '</span>' : '')
+                    + '</a>';
+            }
+            if (filtered.length > 200) {
+                html += '<div class="empty" id="load-more" style="cursor:pointer">Show more (' + (filtered.length - 200) + ' remaining)</div>';
+            }
+            listEl.innerHTML = html;
+
+            if (filtered.length > 200) {
+                document.getElementById('load-more').addEventListener('click', renderAll);
+            }
+        }
+
+        function renderAll() {
+            let html = '';
+            for (const entry of filtered) {
+                const date = formatDate(entry.date);
+                const title = escapeHtml(entry.title || entry.url);
+                html += '<a class="link-item" href="' + escapeAttr(entry.url) + '" target="_blank" rel="noopener">'
+                    + '<span class="link-title">' + title + '</span>'
+                    + (date ? '<span class="link-date">' + date + '</span>' : '')
+                    + '</a>';
+            }
+            listEl.innerHTML = html;
+        }
+
+        function escapeHtml(s) {
+            const d = document.createElement('div');
+            d.textContent = s;
+            return d.innerHTML;
+        }
+        function escapeAttr(s) {
+            return s.replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+        }
+
+        // Search
+        let debounceTimer;
+        searchEl.addEventListener('input', function () {
+            clearTimeout(debounceTimer);
+            debounceTimer = setTimeout(function () {
+                query = searchEl.value.trim();
+                render();
+            }, 150);
+        });
+
+        window.clearSearch = function () {
+            searchEl.value = '';
+            query = '';
+            render();
+            searchEl.focus();
+        };
+
+        // Keyboard shortcut
+        document.addEventListener('keydown', function (e) {
+            if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
+                e.preventDefault();
+                searchEl.focus();
+                searchEl.select();
+            }
+            if (e.key === 'Escape') {
+                if (document.activeElement === searchEl) {
+                    searchEl.blur();
+                } else if (query) {
+                    clearSearch();
+                }
+            }
+        });
+
+        // Tabs
+        document.getElementById('tabs').addEventListener('click', function (e) {
+            const btn = e.target.closest('.tab');
+            if (!btn) return;
+            document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+            btn.classList.add('active');
+            activeTab = btn.dataset.tab;
+            render();
+        });
+
+        // Load data
+        fetch('./links.json')
+            .then(r => r.json())
+            .then(function (data) {
+                allLinks = data;
+                countEl.textContent = allLinks.length + ' links';
+
+                // Update tab counts
+                const counts = { all: allLinks.length, ml: 0, arxiv: 0, other: 0 };
+                allLinks.forEach(function (e) {
+                    const cat = categorize(e);
+                    counts[cat]++;
+                });
+
+                document.querySelectorAll('.tab').forEach(function (tab) {
+                    const key = tab.dataset.tab;
+                    const span = document.createElement('span');
+                    span.className = 'tab-count';
+                    span.textContent = counts[key];
+                    tab.appendChild(span);
+                });
+
+                render();
+            })
+            .catch(function () {
+                listEl.innerHTML = '<div class="empty">Failed to load links</div>';
+            });
+    })();
+    </script>
+</body>
+</html>

@@ -1,1 +1,6 @@
 .vercel
+
+# Old links project files (keep only index.html + links.json)
+links/*
+!links/index.html
+!links/links.json
