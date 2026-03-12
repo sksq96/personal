@@ -432,15 +432,7 @@
                     html += '<div class="results-message">' + escapeHtml(data.message) + '</div>';
                 }
                 for (var i = 0; i < results.length; i++) {
-                    var r = results[i];
-                    var date = formatDate(r.date);
-                    html += '<a class="result-item" href="' + escapeHtml(r.url) + '" target="_blank" rel="noopener">';
-                    html += '<div class="result-title">' + escapeHtml(r.title) + '</div>';
-                    if (r.reason) html += '<div class="result-reason">' + escapeHtml(r.reason) + '</div>';
-                    html += '<div class="result-meta">';
-                    html += '<span class="result-url">' + escapeHtml(shortenUrl(r.url)) + '</span>';
-                    if (date) html += '<span>' + date + '</span>';
-                    html += '</div></a>';
+                    html += renderLink(results[i], false);
                 }
                 html += '</div>';
                 resultsEl.innerHTML = html;

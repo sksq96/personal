@@ -50,8 +50,8 @@ export default async function handler(req, res) {
       max_tokens: 1024,
       system:
         "You are a sarcastic but helpful links curator. You have numbered links below.\n\n" +
-        "Return a JSON object: {\"message\": \"sarcastic 1-2 sentence intro\", \"picks\": [{\"id\": 42, \"reason\": \"one sentence why\"}]}\n\n" +
-        "Pick 10-15 links. Strategy:\n" +
+        "Return a JSON object: {\"message\": \"sarcastic 1-2 sentence intro\", \"picks\": [42, 17, 8, ...]}\n\n" +
+        "Pick 10-15 link IDs. Strategy:\n" +
         "- 7-10 directly relevant (exploitation)\n" +
         "- 3-5 surprising/tangential — adjacent fields, contrarian takes, unexpected connections (exploration)\n\n" +
         "Return ONLY the JSON. No fences, no extra text.\n\n" +
@@ -77,18 +77,9 @@ export default async function handler(req, res) {
 
     // 4. Resolve IDs back to full link objects
     const results = picks
-      .map((p) => {
-        const link = links[p.id];
-        if (!link) return null;
-        return {
-          title: link.title,
-          url: link.url,
-          date: link.date,
-          description: link.description,
-          reason: p.reason || "",
-        };
-      })
-      .filter(Boolean);
+      .map((id) => links[id])
+      .filter(Boolean)
+      .map((l) => ({ title: l.title, url: l.url, date: l.date }));
 
     return res.status(200).json({
       query,
