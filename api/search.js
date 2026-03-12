@@ -34,7 +34,7 @@ export default async function handler(req, res) {
         description: l.description || "",
       }));
 
-    // 2. Build context — title + description only (skip URLs to save tokens)
+    // 2. Build context
     const context = links
       .map(
         (l, i) =>
@@ -46,37 +46,44 @@ export default async function handler(req, res) {
     const client = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY });
     const msg = await client.messages.create({
       model: "claude-sonnet-4-5-20250929",
-      max_tokens: 4096,
+      max_tokens: 2048,
       system:
-        "You are a links search assistant. You have a collection of saved links below. " +
-        "When the user asks a question, find the most relevant links and return ONLY a JSON array. " +
-        "Each result should have: title, url, date, description. " +
-        "Be smart — match semantically, not just keywords. " +
-        "If the query mentions multiple concepts, find links relating to ALL of them. " +
-        "Return at most 20 results, ranked by relevance. " +
-        "Return ONLY the JSON array, no markdown fences, no explanation.\n\n" +
+        "You are a sarcastic but helpful links curator. You have a collection of saved links below.\n\n" +
+        "When the user searches, pick 5-7 links and return a JSON object with this exact shape:\n" +
+        '{"message": "a short sarcastic intro (1-2 sentences)", "results": [...]}\n\n' +
+        "Each result should have: title, url, date, reason.\n" +
+        '"reason" is ONE sentence explaining why you picked this link — be witty, specific, not generic.\n\n' +
+        "SELECTION STRATEGY:\n" +
+        "- 3-4 links should be directly relevant (exploitation)\n" +
+        "- 2-3 links should be surprising or tangentially related — a hop or two away from the query (exploration)\n" +
+        "  These could be from adjacent fields, contrarian takes, foundational ideas, or unexpected connections.\n" +
+        "  Label these with a reason that explains the unexpected connection.\n\n" +
+        "Return ONLY the JSON object. No markdown fences, no extra text.\n\n" +
         "LINKS:\n" +
         context,
-      messages: [{ role: "user", content: `Find links related to: ${query}` }],
+      messages: [{ role: "user", content: query }],
     });
 
     let text = msg.content[0].text.trim();
 
-    // Extract JSON array from response — handle fences, preamble text, etc.
-    let results = [];
+    // Extract JSON object from response
     const fenceMatch = text.match(/```(?:json)?\s*\n([\s\S]*?)```/);
     const jsonText = fenceMatch ? fenceMatch[1].trim() : text;
 
-    // Find the JSON array in the text
-    const arrStart = jsonText.indexOf("[");
-    const arrEnd = jsonText.lastIndexOf("]");
-    if (arrStart !== -1 && arrEnd !== -1) {
+    const objStart = jsonText.indexOf("{");
+    const objEnd = jsonText.lastIndexOf("}");
+    if (objStart !== -1 && objEnd !== -1) {
       try {
-        results = JSON.parse(jsonText.slice(arrStart, arrEnd + 1));
+        const parsed = JSON.parse(jsonText.slice(objStart, objEnd + 1));
+        return res.status(200).json({
+          query,
+          message: parsed.message || "",
+          results: parsed.results || [],
+        });
       } catch {}
     }
 
-    return res.status(200).json({ query, results });
+    return res.status(200).json({ query, message: "", results: [] });
   } catch (err) {
     console.error("Search error:", err);
     return res.status(500).json({ error: err.message || "Internal error" });
