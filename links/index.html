@@ -300,7 +300,7 @@
 
     <script>
     (function () {
-        var AI_SERVER = 'https://shubham-links.ngrok.app';
+        var AI_SERVER = '';
 
         var searchEl = document.getElementById('search');
         var btnEl = document.getElementById('search-btn');
@@ -372,8 +372,8 @@
             }
         }
 
-        // Load all links — try server first, fall back to static
-        fetch(AI_SERVER + '/api/links')
+        // Load all links from Convex via Vercel API, fall back to static
+        fetch('/api/links')
             .then(function (r) { if (!r.ok) throw 0; return r.json(); })
             .catch(function () { return fetch('/links/links.json').then(function (r) { return r.json(); }); })
             .then(function (data) {
@@ -397,7 +397,7 @@
             resultsEl.innerHTML = '<div class="status">Searching through ' + allLinks.length + '+ links...<div class="loading-bar"></div></div>';
 
             try {
-                var resp = await fetch(AI_SERVER + '/api/search', {
+                var resp = await fetch('/api/search', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ query: q }),
