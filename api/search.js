@@ -35,18 +35,19 @@ export default async function handler(req, res) {
         description: l.description || "",
       }));
 
-    // 2. Build context — numbered IDs
-    const context = links
+    // 2. Shuffle links so every search returns different results
+    const shuffled = [...links].sort(() => Math.random() - 0.5);
+    const context = shuffled
       .map(
         (l) =>
           `[${l.id}] ${l.title}${l.description ? " — " + l.description : ""}`
       )
       .join("\n");
 
-    // 3. Ask Claude — return only IDs + reasons
+    // 3. Ask Claude — return only IDs
     const client = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY });
     const msg = await client.messages.create({
-      model: "claude-haiku-4-5-20251001",
+      model: "claude-sonnet-4-5-20250929",
       max_tokens: 1024,
       system:
         "You are a sarcastic but helpful links curator. You have numbered links below.\n\n" +
