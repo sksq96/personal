@@ -61,19 +61,22 @@ export default async function handler(req, res) {
     });
 
     let text = msg.content[0].text.trim();
-    // Strip markdown fences if present
-    if (text.startsWith("```")) {
-      text = text.split("\n").slice(1).join("\n");
-      if (text.endsWith("```")) text = text.slice(0, -3);
-      text = text.trim();
+
+    // Extract JSON array from response — handle fences, preamble text, etc.
+    let results = [];
+    const fenceMatch = text.match(/```(?:json)?\s*\n([\s\S]*?)```/);
+    const jsonText = fenceMatch ? fenceMatch[1].trim() : text;
+
+    // Find the JSON array in the text
+    const arrStart = jsonText.indexOf("[");
+    const arrEnd = jsonText.lastIndexOf("]");
+    if (arrStart !== -1 && arrEnd !== -1) {
+      try {
+        results = JSON.parse(jsonText.slice(arrStart, arrEnd + 1));
+      } catch {}
     }
 
-    try {
-      const results = JSON.parse(text);
-      return res.status(200).json({ query, results });
-    } catch {
-      return res.status(200).json({ query, results: [], raw: text.slice(0, 200) });
-    }
+    return res.status(200).json({ query, results });
   } catch (err) {
     console.error("Search error:", err);
     return res.status(500).json({ error: err.message || "Internal error" });
