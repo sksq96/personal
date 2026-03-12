@@ -27,38 +27,34 @@ export default async function handler(req, res) {
 
     const links = convexData.value
       .filter((l) => l.link && l.link.startsWith("http"))
-      .map((l) => ({
+      .map((l, i) => ({
+        id: i,
         title: l.title || l.link,
         date: l.ogdate || "",
         url: l.link,
         description: l.description || "",
       }));
 
-    // 2. Build context
+    // 2. Build context — numbered IDs
     const context = links
       .map(
-        (l, i) =>
-          `${i + 1}. ${l.title}${l.description ? " — " + l.description : ""} | ${l.url}`
+        (l) =>
+          `[${l.id}] ${l.title}${l.description ? " — " + l.description : ""}`
       )
       .join("\n");
 
-    // 3. Ask Claude
+    // 3. Ask Claude — return only IDs + reasons
     const client = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY });
     const msg = await client.messages.create({
       model: "claude-haiku-4-5-20251001",
-      max_tokens: 2048,
+      max_tokens: 1024,
       system:
-        "You are a sarcastic but helpful links curator. You have a collection of saved links below.\n\n" +
-        "When the user searches, pick 5-7 links and return a JSON object with this exact shape:\n" +
-        '{"message": "a short sarcastic intro (1-2 sentences)", "results": [...]}\n\n' +
-        "Each result should have: title, url, date, reason.\n" +
-        '"reason" is ONE sentence explaining why you picked this link — be witty, specific, not generic.\n\n' +
-        "SELECTION STRATEGY:\n" +
-        "- 3-4 links should be directly relevant (exploitation)\n" +
-        "- 2-3 links should be surprising or tangentially related — a hop or two away from the query (exploration)\n" +
-        "  These could be from adjacent fields, contrarian takes, foundational ideas, or unexpected connections.\n" +
-        "  Label these with a reason that explains the unexpected connection.\n\n" +
-        "Return ONLY the JSON object. No markdown fences, no extra text.\n\n" +
+        "You are a sarcastic but helpful links curator. You have numbered links below.\n\n" +
+        "Return a JSON object: {\"message\": \"sarcastic 1-2 sentence intro\", \"picks\": [{\"id\": 42, \"reason\": \"one sentence why\"}]}\n\n" +
+        "Pick 10-15 links. Strategy:\n" +
+        "- 7-10 directly relevant (exploitation)\n" +
+        "- 3-5 surprising/tangential — adjacent fields, contrarian takes, unexpected connections (exploration)\n\n" +
+        "Return ONLY the JSON. No fences, no extra text.\n\n" +
         "LINKS:\n" +
         context,
       messages: [{ role: "user", content: query }],
@@ -66,24 +62,39 @@ export default async function handler(req, res) {
 
     let text = msg.content[0].text.trim();
 
-    // Extract JSON object from response
+    // Extract JSON
     const fenceMatch = text.match(/```(?:json)?\s*\n([\s\S]*?)```/);
     const jsonText = fenceMatch ? fenceMatch[1].trim() : text;
-
     const objStart = jsonText.indexOf("{");
     const objEnd = jsonText.lastIndexOf("}");
-    if (objStart !== -1 && objEnd !== -1) {
-      try {
-        const parsed = JSON.parse(jsonText.slice(objStart, objEnd + 1));
-        return res.status(200).json({
-          query,
-          message: parsed.message || "",
-          results: parsed.results || [],
-        });
-      } catch {}
+
+    if (objStart === -1 || objEnd === -1) {
+      return res.status(200).json({ query, message: "", results: [] });
     }
 
-    return res.status(200).json({ query, message: "", results: [] });
+    const parsed = JSON.parse(jsonText.slice(objStart, objEnd + 1));
+    const picks = parsed.picks || [];
+
+    // 4. Resolve IDs back to full link objects
+    const results = picks
+      .map((p) => {
+        const link = links[p.id];
+        if (!link) return null;
+        return {
+          title: link.title,
+          url: link.url,
+          date: link.date,
+          description: link.description,
+          reason: p.reason || "",
+        };
+      })
+      .filter(Boolean);
+
+    return res.status(200).json({
+      query,
+      message: parsed.message || "",
+      results,
+    });
   } catch (err) {
     console.error("Search error:", err);
     return res.status(500).json({ error: err.message || "Internal error" });
