@@ -43,7 +43,7 @@ export default async function handler(req, res) {
       .join("\n");
 
     // 3. Ask Claude
-    const client = new Anthropic();
+    const client = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY });
     const msg = await client.messages.create({
       model: "claude-sonnet-4-5-20250929",
       max_tokens: 4096,
