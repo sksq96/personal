@@ -370,7 +370,7 @@
             var html = '<div class="results">';
             var batch = allLinks.slice(0, 200);
             for (var i = 0; i < batch.length; i++) {
-                html += renderLink(batch[i], false);
+                html += renderLink(batch[i], true);
             }
             if (allLinks.length > 200) {
                 html += '<div class="status" id="load-more" style="cursor:pointer;padding:30px 0">Show all ' + allLinks.length + ' links</div>';
@@ -381,7 +381,7 @@
                 document.getElementById('load-more').addEventListener('click', function () {
                     var h = '<div class="results">';
                     for (var j = 0; j < allLinks.length; j++) {
-                        h += renderLink(allLinks[j], false);
+                        h += renderLink(allLinks[j], true);
                     }
                     h += '</div>';
                     allLinksEl.innerHTML = h;
@@ -432,7 +432,7 @@
                     html += '<div class="results-message">' + escapeHtml(data.message) + '</div>';
                 }
                 for (var i = 0; i < results.length; i++) {
-                    html += renderLink(results[i], false);
+                    html += renderLink(results[i], true);
                 }
                 html += '</div>';
                 resultsEl.innerHTML = html;
