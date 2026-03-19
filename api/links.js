@@ -12,7 +12,7 @@ export default async function handler(req, res) {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           path: "links:list",
-          args: { cursor, limit: 200 },
+          args: cursor ? { cursor, limit: 200 } : { limit: 200 },
         }),
       });
       const data = await resp.json();
