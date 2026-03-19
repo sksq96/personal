@@ -1,26 +1,45 @@
 const CONVEX_URL = "https://pleasant-bobcat-119.convex.cloud";
 
 export default async function handler(req, res) {
-  const convexResp = await fetch(`${CONVEX_URL}/api/query`, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ path: "links:list", args: {} }),
-  });
-  const convexData = await convexResp.json();
+  try {
+    const allLinks = [];
+    let cursor = null;
 
-  if (convexData.status !== "success") {
-    return res.status(500).json({ error: "Failed to fetch links" });
+    // Paginate through all links
+    while (true) {
+      const resp = await fetch(`${CONVEX_URL}/api/query`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          path: "links:list",
+          args: { cursor, limit: 200 },
+        }),
+      });
+      const data = await resp.json();
+
+      if (data.status !== "success") {
+        return res.status(500).json({ error: "Failed to fetch links" });
+      }
+
+      const page = data.value;
+      for (const l of page.links) {
+        if (l.link && l.link.startsWith("http")) {
+          allLinks.push({
+            title: l.title || l.link,
+            date: l.ogdate || "",
+            url: l.link,
+            description: l.description || "",
+          });
+        }
+      }
+
+      if (page.done) break;
+      cursor = page.cursor;
+    }
+
+    res.setHeader("Cache-Control", "s-maxage=60, stale-while-revalidate=120");
+    return res.status(200).json(allLinks);
+  } catch (err) {
+    return res.status(500).json({ error: err.message || "Internal error" });
   }
-
-  const links = convexData.value
-    .filter((l) => l.link && l.link.startsWith("http"))
-    .map((l) => ({
-      title: l.title || l.link,
-      date: l.ogdate || "",
-      url: l.link,
-      description: l.description || "",
-    }));
-
-  res.setHeader("Cache-Control", "s-maxage=300, stale-while-revalidate=600");
-  return res.status(200).json(links);
 }
