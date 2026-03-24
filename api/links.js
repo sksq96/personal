@@ -5,14 +5,13 @@ export default async function handler(req, res) {
     const allLinks = [];
     let cursor = null;
 
-    // Paginate through all links
     while (true) {
       const resp = await fetch(`${CONVEX_URL}/api/query`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           path: "links:list",
-          args: cursor ? { cursor, limit: 200 } : { limit: 200 },
+          args: cursor ? { cursor, limit: 5000 } : { limit: 5000 },
         }),
       });
       const data = await resp.json();
@@ -37,7 +36,7 @@ export default async function handler(req, res) {
       cursor = page.cursor;
     }
 
-    res.setHeader("Cache-Control", "s-maxage=60, stale-while-revalidate=120");
+    res.setHeader("Cache-Control", "s-maxage=300, stale-while-revalidate=600");
     return res.status(200).json(allLinks);
   } catch (err) {
     return res.status(500).json({ error: err.message || "Internal error" });
