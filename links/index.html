@@ -389,17 +389,27 @@
             }
         }
 
-        // Load all links from Convex via Vercel API, fall back to static
+        // Load from localStorage cache instantly, then refresh from API
+        var CACHE_KEY = 'links_cache';
+        var cached = null;
+        try { cached = JSON.parse(localStorage.getItem(CACHE_KEY)); } catch(e) {}
+
+        if (cached && cached.data && cached.data.length) {
+            allLinks = cached.data;
+            countEl.textContent = allLinks.length + ' links';
+            renderAllLinks();
+        }
+
         fetch('/api/links')
             .then(function (r) { if (!r.ok) throw 0; return r.json(); })
-            .catch(function () { return fetch('/links/links.json').then(function (r) { return r.json(); }); })
             .then(function (data) {
                 allLinks = data;
                 countEl.textContent = data.length + ' links';
                 renderAllLinks();
+                try { localStorage.setItem(CACHE_KEY, JSON.stringify({ data: data, ts: Date.now() })); } catch(e) {}
             })
             .catch(function () {
-                allLinksEl.innerHTML = '<div class="status">Failed to load links</div>';
+                if (!cached) allLinksEl.innerHTML = '<div class="status">Failed to load links</div>';
             });
 
         // AI search
