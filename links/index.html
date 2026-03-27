@@ -6,67 +6,25 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Inter:wght@400;500;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../style.css" />
     <title>Links — Shubham Chandel</title>
     <style>
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            font-family: 'Space Grotesk', sans-serif;
-            text-transform: uppercase;
-        }
-        html { height: 100%; }
-        body {
-            --accent: #E63946;
-            --bg: #0a0a0a;
-            --fg: #EFEFEF;
-            --fg-dim: rgba(239, 239, 239, 0.45);
-            --fg-mid: rgba(239, 239, 239, 0.7);
-            --border: rgba(239, 239, 239, 0.08);
-            background-color: var(--bg);
-            color: var(--fg);
-            min-height: 100%;
-            -webkit-font-smoothing: antialiased;
-            -moz-osx-font-smoothing: grayscale;
-        }
-
+        /* Links page overrides */
+        body { overflow: auto; height: auto; min-height: 100%; }
         .container {
             max-width: 900px;
             margin: 0 auto;
-            padding: 36px 36px 80px;
+            height: auto;
             min-height: 100vh;
-            display: flex;
-            flex-direction: column;
+            overflow: visible;
+        }
+        main {
+            margin-bottom: 0;
+            align-items: stretch;
+            text-align: left;
         }
 
-        /* HEADER */
-        header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 60px;
-            opacity: 0.01;
-            transform: translateY(10px);
-            animation: apparition 1s forwards 0.2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-        }
-        .monogram {
-            font-size: 18px;
-            font-weight: 700;
-            letter-spacing: 0.05em;
-            color: var(--fg);
-            text-decoration: none;
-            transition: color 0.3s;
-        }
-        .monogram:hover { color: var(--accent); }
-        .count {
-            font-size: 13px;
-            font-weight: 500;
-            letter-spacing: 0.08em;
-            color: var(--fg-dim);
-        }
-
-        /* HERO */
         .hero {
             text-align: center;
             margin-bottom: 50px;
@@ -76,42 +34,40 @@
             font-size: 120px;
             line-height: 0.9;
             letter-spacing: -0.02em;
-            text-shadow: 2px 2px 0px var(--accent), 4px 4px 0px rgba(230,57,70,0.15);
+            text-shadow: 2px 2px 0px var(--accent, #E63946), 4px 4px 0px rgba(230,57,70,0.15);
             opacity: 0.01;
             transform: translateY(30px);
-            animation: apparition 0.8s forwards 0.1s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            animation: mainApparition 0.8s forwards 0.1s cubic-bezier(0.25, 0.46, 0.45, 0.94);
         }
         .hero p {
             font-size: 12px;
             letter-spacing: 0.08em;
-            color: var(--fg-dim);
+            color: rgba(239, 239, 239, 0.45);
             margin-top: 20px;
             text-transform: none;
             opacity: 0.01;
             transform: translateY(15px);
-            animation: apparition 0.8s forwards 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            animation: mainApparition 0.8s forwards 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
         }
+        body.day-mode .hero p { color: rgba(17, 17, 17, 0.45); }
 
-        /* SEARCH */
         .search-wrap {
             margin-bottom: 40px;
             opacity: 0.01;
             transform: translateY(10px);
-            animation: apparition 0.8s forwards 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            animation: mainApparition 0.8s forwards 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
         }
-        .search-row {
-            display: flex;
-            gap: 10px;
-        }
+        .search-row { display: flex; gap: 10px; }
         .search-box {
             flex: 1;
             display: flex;
             align-items: center;
-            border: 1px solid var(--border);
+            border: 1px solid rgba(239, 239, 239, 0.08);
             border-radius: 4px;
             padding: 0 16px;
             transition: border-color 0.3s;
         }
+        body.day-mode .search-box { border-color: rgba(17, 17, 17, 0.12); }
         .search-box:focus-within { border-color: rgba(239, 239, 239, 0.25); }
         .search-input {
             flex: 1;
@@ -122,18 +78,19 @@
             font-size: 14px;
             font-weight: 500;
             letter-spacing: 0.02em;
-            color: var(--fg);
-            text-transform: none;
+            color: #EFEFEF;
             padding: 14px 0;
-            caret-color: var(--accent);
+            caret-color: #E63946;
             width: 100%;
         }
-        .search-input::placeholder { color: var(--fg-dim); text-transform: none; }
+        body.day-mode .search-input { color: #111111; }
+        .search-input::placeholder { color: rgba(239, 239, 239, 0.45); }
+        body.day-mode .search-input::placeholder { color: rgba(17, 17, 17, 0.45); }
         .search-btn {
-            background: var(--accent);
+            background: #E63946;
             border: none;
             border-radius: 4px;
-            color: var(--fg);
+            color: #EFEFEF;
             font-family: 'Space Grotesk', sans-serif;
             font-size: 13px;
             font-weight: 500;
@@ -148,53 +105,55 @@
         .search-btn:hover { opacity: 0.85; }
         .search-btn:disabled { opacity: 0.4; cursor: default; }
 
-        /* RESULTS */
         .results-message {
             font-size: 15px;
-            color: var(--fg-mid);
+            color: rgba(239, 239, 239, 0.7);
             text-transform: none;
             line-height: 1.6;
             margin-bottom: 24px;
             padding-bottom: 20px;
-            border-bottom: 1px solid var(--border);
+            border-bottom: 1px solid rgba(239, 239, 239, 0.08);
         }
         .results {
             opacity: 0.01;
             transform: translateY(10px);
-            animation: apparition 0.5s forwards cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            animation: mainApparition 0.5s forwards cubic-bezier(0.25, 0.46, 0.45, 0.94);
         }
         .result-item {
             display: block;
             padding: 16px 0;
-            border-bottom: 1px solid var(--border);
+            border-bottom: 1px solid rgba(239, 239, 239, 0.08);
             text-decoration: none;
             transition: padding-left 0.2s ease;
         }
+        body.day-mode .result-item { border-bottom-color: rgba(17, 17, 17, 0.08); }
         .result-item:hover { padding-left: 8px; }
-        .result-item:hover .result-title { color: var(--accent); }
+        .result-item:hover .result-title { color: #E63946; }
         .result-title {
             font-size: 17px;
             font-weight: 500;
             letter-spacing: 0.01em;
             line-height: 1.4;
-            color: var(--fg);
+            color: #EFEFEF;
             transition: color 0.2s;
             text-transform: none;
             word-break: break-word;
         }
+        body.day-mode .result-title { color: #111111; }
         .result-meta {
             display: flex;
             gap: 16px;
             margin-top: 6px;
             font-size: 11px;
             letter-spacing: 0.04em;
-            color: var(--fg-dim);
+            color: rgba(239, 239, 239, 0.45);
             text-transform: none;
             flex-wrap: wrap;
         }
+        body.day-mode .result-meta { color: rgba(17, 17, 17, 0.45); }
         .result-reason {
             font-size: 12px;
-            color: var(--fg-dim);
+            color: rgba(239, 239, 239, 0.45);
             text-transform: none;
             line-height: 1.4;
             margin-top: 4px;
@@ -202,12 +161,13 @@
         }
         .result-desc {
             font-size: 13px;
-            color: var(--fg-mid);
+            color: rgba(239, 239, 239, 0.7);
             text-transform: none;
             line-height: 1.5;
             margin-top: 6px;
             word-break: break-word;
         }
+        body.day-mode .result-desc { color: rgba(17, 17, 17, 0.7); }
         .result-url {
             overflow: hidden;
             text-overflow: ellipsis;
@@ -215,11 +175,10 @@
             max-width: 100%;
         }
 
-        /* STATUS */
         .status {
             text-align: center;
             padding: 60px 0;
-            color: var(--fg-dim);
+            color: rgba(239, 239, 239, 0.45);
             font-size: 13px;
             letter-spacing: 0.04em;
             text-transform: none;
@@ -227,7 +186,7 @@
         .loading-bar {
             width: 60px;
             height: 2px;
-            background: var(--border);
+            background: rgba(239, 239, 239, 0.08);
             margin: 16px auto 0;
             border-radius: 1px;
             overflow: hidden;
@@ -237,24 +196,9 @@
             display: block;
             width: 30px;
             height: 100%;
-            background: var(--accent);
+            background: #E63946;
             border-radius: 1px;
             animation: loadSlide 1s infinite ease-in-out;
-        }
-
-        /* FOOTER */
-        .page-footer {
-            margin-top: auto;
-            padding-top: 60px;
-            text-align: center;
-            font-size: 11px;
-            letter-spacing: 0.06em;
-            color: var(--fg-dim);
-            opacity: 0.5;
-        }
-
-        @keyframes apparition {
-            to { opacity: 1; transform: translateY(0); }
         }
         @keyframes loadSlide {
             0% { transform: translateX(-30px); }
@@ -262,13 +206,30 @@
             100% { transform: translateX(-30px); }
         }
 
-        /* RESPONSIVE */
+        .page-footer {
+            margin-top: auto;
+            padding-top: 60px;
+            padding-bottom: 30px;
+            text-align: center;
+            font-size: 11px;
+            letter-spacing: 0.06em;
+            color: rgba(239, 239, 239, 0.45);
+            opacity: 0.5;
+        }
+
+        .count {
+            font-size: 13px;
+            font-weight: 500;
+            letter-spacing: 0.08em;
+            color: rgba(239, 239, 239, 0.45);
+        }
+        body.day-mode .count { color: rgba(17, 17, 17, 0.45); }
+
         @media (max-width: 768px) {
             .container { padding: 24px 16px 60px; }
             .hero h1 { font-size: 64px; }
             .hero { margin-bottom: 32px; }
             .hero p { font-size: 11px; margin-top: 14px; }
-            header { margin-bottom: 36px; }
             .search-input { font-size: 16px; padding: 12px 0; }
             .search-btn { padding: 12px 20px; }
             .result-title { font-size: 15px; }
@@ -284,31 +245,50 @@
     </style>
 </head>
 <body>
+    <!-- Grain + sunlight overlays -->
+    <div id="grain-overlay"></div>
+    <div id="sunlight-1"></div>
+    <div id="sunlight-2"></div>
+
     <div class="container">
+        <!-- Same header as main page -->
         <header>
-            <a class="monogram" href="/">SC</a>
-            <span class="count" id="total-count"></span>
+            <div class="logo-okey">
+                <a href="/" style="text-decoration:none;color:inherit"><span class="monogram">SC</span></a>
+            </div>
+
+            <div class="header-center">
+                <a href="/" style="text-decoration:none;color:inherit">SAY HELLO</a>
+            </div>
+
+            <div class="toggle-mode">
+                <div class="toggle-cap-container clickable">
+                    <div class="toogle-btn"></div>
+                </div>
+            </div>
         </header>
 
-        <div class="hero">
-            <h1>LINKS</h1>
-            <p>things i've read, saved, and thought about</p>
-        </div>
-
-        <div class="search-wrap">
-            <div class="search-row">
-                <div class="search-box">
-                    <input class="search-input" id="search" type="text" placeholder="Search again, get different links every time..." autocomplete="off" />
-                </div>
-                <button class="search-btn" id="search-btn" onclick="doSearch()">Search</button>
+        <main>
+            <div class="hero">
+                <h1>LINKS</h1>
+                <p>things i've read, saved, and thought about — <span class="count" id="total-count"></span></p>
             </div>
-        </div>
 
-        <div id="results"></div>
+            <div class="search-wrap">
+                <div class="search-row">
+                    <div class="search-box">
+                        <input class="search-input" id="search" type="text" placeholder="Search again, get different links every time..." autocomplete="off" />
+                    </div>
+                    <button class="search-btn" id="search-btn" onclick="doSearch()">Search</button>
+                </div>
+            </div>
 
-        <div id="all-links">
-            <div class="status">Loading...<div class="loading-bar"></div></div>
-        </div>
+            <div id="results"></div>
+
+            <div id="all-links">
+                <div class="status">Loading...<div class="loading-bar"></div></div>
+            </div>
+        </main>
 
         <div class="page-footer">
             shubham.lol
@@ -316,9 +296,27 @@
     </div>
 
     <script>
-    (function () {
-        var AI_SERVER = '';
+    // Day/night toggle
+    (function() {
+        var isDay = false;
+        document.body.classList.add('night-mode');
 
+        var toggle = document.querySelector('.toggle-cap-container');
+        function toggleMode() {
+            isDay = !isDay;
+            document.body.classList.remove('day-mode', 'night-mode');
+            document.body.classList.add(isDay ? 'day-mode' : 'night-mode');
+        }
+        if (toggle) toggle.addEventListener('click', toggleMode);
+
+        document.addEventListener('keydown', function(e) {
+            if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
+            if (e.key === 'd' || e.key === 'D') toggleMode();
+        });
+    })();
+
+    // Links functionality
+    (function () {
         var searchEl = document.getElementById('search');
         var btnEl = document.getElementById('search-btn');
         var resultsEl = document.getElementById('results');
@@ -365,54 +363,45 @@
             return html;
         }
 
+        var nextCursor = null;
+        var loading = false;
+
         function renderAllLinks() {
             if (allLinks.length === 0) return;
             var html = '<div class="results">';
-            var batch = allLinks.slice(0, 200);
-            for (var i = 0; i < batch.length; i++) {
-                html += renderLink(batch[i], true);
+            for (var i = 0; i < allLinks.length; i++) {
+                html += renderLink(allLinks[i], true);
             }
-            if (allLinks.length > 200) {
-                html += '<div class="status" id="load-more" style="cursor:pointer;padding:30px 0">Show all ' + allLinks.length + ' links</div>';
+            if (nextCursor) {
+                html += '<div class="status" id="load-more" style="cursor:pointer;padding:30px 0">Load more</div>';
             }
             html += '</div>';
             allLinksEl.innerHTML = html;
-            if (allLinks.length > 200) {
-                document.getElementById('load-more').addEventListener('click', function () {
-                    var h = '<div class="results">';
-                    for (var j = 0; j < allLinks.length; j++) {
-                        h += renderLink(allLinks[j], true);
-                    }
-                    h += '</div>';
-                    allLinksEl.innerHTML = h;
-                });
+            if (nextCursor) {
+                document.getElementById('load-more').addEventListener('click', fetchPage);
             }
         }
 
-        // Load from localStorage cache instantly, then refresh from API
-        var CACHE_KEY = 'links_cache';
-        var cached = null;
-        try { cached = JSON.parse(localStorage.getItem(CACHE_KEY)); } catch(e) {}
-
-        if (cached && cached.data && cached.data.length) {
-            allLinks = cached.data;
-            countEl.textContent = allLinks.length + ' links';
-            renderAllLinks();
+        function fetchPage() {
+            if (loading) return;
+            loading = true;
+            var url = '/api/links' + (nextCursor ? '?cursor=' + encodeURIComponent(nextCursor) : '');
+            fetch(url)
+                .then(function (r) { if (!r.ok) throw 0; return r.json(); })
+                .then(function (data) {
+                    allLinks = allLinks.concat(data.links);
+                    nextCursor = data.cursor;
+                    countEl.textContent = allLinks.length + (nextCursor ? '+' : '') + ' links';
+                    renderAllLinks();
+                })
+                .catch(function () {
+                    if (allLinks.length === 0) allLinksEl.innerHTML = '<div class="status">Failed to load links</div>';
+                })
+                .finally(function () { loading = false; });
         }
 
-        fetch('/api/links')
-            .then(function (r) { if (!r.ok) throw 0; return r.json(); })
-            .then(function (data) {
-                allLinks = data;
-                countEl.textContent = data.length + ' links';
-                renderAllLinks();
-                try { localStorage.setItem(CACHE_KEY, JSON.stringify({ data: data, ts: Date.now() })); } catch(e) {}
-            })
-            .catch(function () {
-                if (!cached) allLinksEl.innerHTML = '<div class="status">Failed to load links</div>';
-            });
+        fetchPage();
 
-        // AI search
         window.doSearch = async function () {
             var q = searchEl.value.trim();
             if (!q || searching) return;

@@ -1,7 +1,20 @@
 document.addEventListener('DOMContentLoaded', () => {
     const toggleModeBtn = document.querySelector('.toggle-cap-container');
-    toggleModeBtn.addEventListener('click', () => {
-        document.body.classList.toggle('dark-mode');
+    let isDay = false;
+
+    document.body.classList.add('night-mode');
+
+    function toggleMode() {
+        isDay = !isDay;
+        document.body.classList.remove('day-mode', 'night-mode');
+        document.body.classList.add(isDay ? 'day-mode' : 'night-mode');
+    }
+
+    toggleModeBtn.addEventListener('click', toggleMode);
+
+    document.addEventListener('keydown', (e) => {
+        if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
+        if (e.key === 'd' || e.key === 'D') toggleMode();
     });
 
     const cursorTxt = document.querySelector('.cursorTxt');

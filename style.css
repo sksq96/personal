@@ -96,11 +96,105 @@ a{
     transition: 0.5s;
     overflow: hidden;
 }
-.dark-mode {
+/* Day mode */
+body.day-mode {
     background-color: #F2EDE9;
     color: #111111;
 }
-.dark-mode .container {
+body.day-mode .container { color: #111111; }
+body.day-mode .monogram { color: #111111; }
+body.day-mode .capsule-left, body.day-mode .capsule-right {
+    background-color: #111111;
+    border-color: #111111;
+    color: #EFEFEF;
+}
+body.day-mode .social-media a:after { background: #111111; }
+body.night-mode .capsule-left, body.night-mode .capsule-right {
+    background-color: rgba(50, 60, 100, 0.6);
+    border-color: rgba(80, 100, 150, 0.3);
+}
+body.day-mode .description-okey { color: #111111; }
+
+/* Film grain — always visible */
+#grain-overlay {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 9999;
+}
+#grain-overlay::before {
+    content: "";
+    position: fixed;
+    top: -10rem;
+    left: -10rem;
+    width: calc(100% + 20rem);
+    height: calc(100% + 20rem);
+    background-image: url(https://upload.wikimedia.org/wikipedia/commons/5/5c/Image_gaussian_noise_example.png);
+    opacity: 0.1;
+    pointer-events: none;
+    animation: grain-flicker 1s steps(2) infinite;
+}
+@keyframes grain-flicker {
+    0%   { transform: translate3d(0, 2rem, 0); }
+    100% { transform: translate3d(-2rem, 0, 0); }
+}
+
+/* Light source gradient — behind content */
+#sunlight-1 {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: -1;
+    transition: background 1.2s ease, opacity 1s ease;
+}
+#sunlight-2 {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: -1;
+    mix-blend-mode: plus-lighter;
+    transition: background 1.2s ease, opacity 1s ease;
+    opacity: 0;
+}
+
+/* ── DAY: warm sun, strong gradients, smooth drift ── */
+body.day-mode #sunlight-1 {
+    animation: day-gradient-drift 8s ease-in-out infinite alternate;
+}
+body.day-mode #sunlight-2 {
+    opacity: 0.25;
+    animation: day-beam-drift 8s ease-in-out infinite alternate;
+}
+
+@keyframes day-gradient-drift {
+    0%   { background: radial-gradient(ellipse at 10% 5%, transparent 10%, rgba(220, 150, 50, 0.2) 35%, rgba(80, 30, 5, 0.5) 100%); }
+    100% { background: radial-gradient(ellipse at 22% 18%, transparent 10%, rgba(230, 160, 60, 0.22) 38%, rgba(70, 25, 5, 0.52) 100%); }
+}
+
+@keyframes day-beam-drift {
+    0%   { background: conic-gradient(from -2deg at 12% 7%, transparent 25deg, rgba(255, 180, 50, 0.38) 65deg 125deg, transparent 155deg); }
+    100% { background: conic-gradient(from 4deg at 24% 16%, transparent 25deg, rgba(255, 170, 55, 0.4) 65deg 125deg, transparent 155deg); }
+}
+
+/* ── NIGHT: cool moonlight, strong gradients, smooth drift ── */
+body.night-mode #sunlight-1 {
+    animation: night-gradient-drift 10s ease-in-out infinite alternate;
+}
+body.night-mode #sunlight-2 {
+    opacity: 0.15;
+    animation: night-beam-drift 10s ease-in-out infinite alternate;
+}
+
+@keyframes night-gradient-drift {
+    0%   { background: radial-gradient(ellipse at 88% 5%, transparent 10%, rgba(50, 70, 140, 0.16) 35%, rgba(2, 2, 20, 0.55) 100%); }
+    100% { background: radial-gradient(ellipse at 76% 18%, transparent 10%, rgba(60, 80, 150, 0.18) 38%, rgba(4, 4, 22, 0.58) 100%); }
+}
+
+@keyframes night-beam-drift {
+    0%   { background: conic-gradient(from 183deg at 86% 8%, transparent 25deg, rgba(100, 155, 230, 0.26) 65deg 125deg, transparent 155deg); }
+    100% { background: conic-gradient(from 176deg at 74% 16%, transparent 25deg, rgba(95, 148, 222, 0.28) 65deg 125deg, transparent 155deg); }
+}
+.day-mode .container {
     color: #111111;
 }
 
@@ -135,7 +229,7 @@ header{
     color: #EFEFEF;
     text-transform: uppercase;
 }
-.dark-mode .monogram {
+.day-mode .monogram {
     color: #111111;
 }
 
@@ -143,7 +237,7 @@ header{
     transition: 0.5s;
 }
 
-.dark-mode .logo-okey, .dark-mode .toggle-mode {
+.day-mode .logo-okey, .day-mode .toggle-mode {
     filter: invert(0);
 }
 
@@ -166,7 +260,7 @@ header{
     transition: 0.5s;
 }
 
-.dark-mode .toogle-btn {
+.day-mode .toogle-btn {
     transform: translateX(17px);
 }
 
@@ -391,7 +485,7 @@ footer{
     animation: mainApparition 0.8s forwards 1.65s cubic-bezier(0.250, 0.460, 0.450, 0.940);
 }
 
-.dark-mode .capsule-left, .dark-mode .capsule-right {
+.day-mode .capsule-left, .day-mode .capsule-right {
     background-color: #111111;
     border: solid 1px #111111;
     color: #EFEFEF;
@@ -400,7 +494,7 @@ footer{
     color: #EFEFEF;
     transition: 0.5s;
 }
-.dark-mode .capsule-left a, .dark-mode .capsule-right a {
+.day-mode .capsule-left a, .day-mode .capsule-right a {
     color: #EFEFEF;
 }
 
@@ -456,7 +550,7 @@ footer{
     transition: width 0.3s ease 0s, left 0.3s ease 0s;
     width: 0;
 }
-.dark-mode .social-media a:after {   
+.day-mode .social-media a:after {   
     background: #111111;
 }
 
@@ -536,7 +630,7 @@ footer{
         background-color: transparent;
         color: #EFEFEF;
     }
-    .dark-mode .capsule-left:hover{
+    .day-mode .capsule-left:hover{
         background-color: #00000000;
         color: #EDE8E4;
     }
@@ -545,7 +639,7 @@ footer{
         color: #EFEFEF;
     }
     
-    .dark-mode .capsule-left:hover a{
+    .day-mode .capsule-left:hover a{
         color: #EDE8E4;
     }
     
@@ -554,7 +648,7 @@ footer{
         color: #EFEFEF;
     }
     
-    .dark-mode .capsule-right:hover{
+    .day-mode .capsule-right:hover{
         background-color: #00000000;
         color: #EDE8E4;
     }
@@ -563,7 +657,7 @@ footer{
         color: #EFEFEF;
     }
     
-    .dark-mode .capsule-right:hover a{
+    .day-mode .capsule-right:hover a{
         color: #EDE8E4;
     }
 
@@ -676,7 +770,7 @@ footer{
     .capsule-right {
         order: 3;
     }
-    .dark-mode .capsule-left, .dark-mode .capsule-right {
+    .day-mode .capsule-left, .day-mode .capsule-right {
         border: solid 1px #111111;
     }
     .emoji-hover {
