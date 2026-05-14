@@ -116,14 +116,28 @@ export default function Footer() {
         </ul>
       </div>
       <div className="flex justify-between items-center mt-4">
-        <a
-          href="https://github.com/sksq96/personal"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="footer-version text-[13px]"
-        >
-          shubham.lol
-        </a>
+        <div className="footer-version text-[13px]">
+          <a
+            href="https://github.com/sksq96/personal"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            shubham.lol
+          </a>
+          {' '}
+          <span className="opacity-70">
+            (stolen from{' '}
+            <a
+              href="https://idhant.xyz"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="underline underline-offset-2 decoration-[0.1em]"
+            >
+              idhant.xyz
+            </a>
+            )
+          </span>
+        </div>
       </div>
     </footer>
   )
