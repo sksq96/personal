@@ -2,32 +2,33 @@
 
 import { useEffect, useState } from 'react'
 
-function defaultThemeForHour() {
+function isDayHour() {
   const h = new Date().getHours()
-  return h >= 6 && h < 18 ? 'light' : 'dark'
+  return h >= 6 && h < 18
 }
 
 export default function ThemeToggle() {
-  const [theme, setTheme] = useState('dark')
+  const [theme, setTheme] = useState<'light' | 'dark'>('light')
+  const [mounted, setMounted] = useState(false)
 
   useEffect(() => {
-    const saved = localStorage.getItem('theme')
-    const initial = saved || defaultThemeForHour()
+    const initial = isDayHour() ? 'light' : 'dark'
     setTheme(initial)
     document.documentElement.classList.toggle('dark', initial === 'dark')
+    setMounted(true)
   }, [])
 
-  const toggleTheme = () => {
-    const newTheme = theme === 'dark' ? 'light' : 'dark'
-    setTheme(newTheme)
-    localStorage.setItem('theme', newTheme)
-    document.documentElement.classList.toggle('dark', newTheme === 'dark')
-    window.dispatchEvent(new Event('storage'))
+  const toggle = () => {
+    const next = theme === 'dark' ? 'light' : 'dark'
+    setTheme(next)
+    document.documentElement.classList.toggle('dark', next === 'dark')
   }
+
+  if (!mounted) return <div className="w-9 h-9" />
 
   return (
     <button
-      onClick={toggleTheme}
+      onClick={toggle}
       className="p-2 text-[var(--text-primary)] hover:text-[var(--text-secondary)] transition-colors"
       aria-label="Toggle theme"
     >

@@ -6,7 +6,6 @@ import { Analytics } from '@vercel/analytics/react'
 import { SpeedInsights } from '@vercel/speed-insights/next'
 import Footer from './components/footer'
 import { baseUrl } from './sitemap'
-import Background from './components/background'
 import TopRight from './components/top-right'
 
 export const metadata: Metadata = {
@@ -55,20 +54,16 @@ export default function RootLayout({
           dangerouslySetInnerHTML={{
             __html: `
               (function() {
-                function getTheme() {
-                  const savedTheme = localStorage.getItem('theme')
-                  if (savedTheme) return savedTheme
-                  var h = new Date().getHours()
-                  return (h >= 6 && h < 18) ? 'light' : 'dark'
-                }
-                document.documentElement.classList.toggle('dark', getTheme() === 'dark')
+                var h = new Date().getHours()
+                var dark = !(h >= 6 && h < 18)
+                document.documentElement.classList.toggle('dark', dark)
+                try { localStorage.removeItem('theme') } catch (e) {}
               })()
             `,
           }}
         />
       </head>
       <body className="antialiased max-w-6xl mx-8 mt-4 lg:mx-auto relative">
-        <Background />
         <div className="flex-auto min-w-0 mt-2 flex flex-col px-6 md:px-8 relative z-10">
           <div className="flex justify-end items-center gap-3 mb-8">
             <TopRight />
