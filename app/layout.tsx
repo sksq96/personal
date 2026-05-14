@@ -7,6 +7,7 @@ import { SpeedInsights } from '@vercel/speed-insights/next'
 import Footer from './components/footer'
 import { baseUrl } from './sitemap'
 import TopRight from './components/top-right'
+import Background from './components/background'
 
 export const metadata: Metadata = {
   metadataBase: new URL(baseUrl),
@@ -64,6 +65,7 @@ export default function RootLayout({
         />
       </head>
       <body className="antialiased max-w-6xl mx-8 mt-4 lg:mx-auto relative">
+        <Background />
         <div className="flex-auto min-w-0 mt-2 flex flex-col px-6 md:px-8 relative z-10">
           <div className="flex justify-end items-center gap-3 mb-8">
             <TopRight />
