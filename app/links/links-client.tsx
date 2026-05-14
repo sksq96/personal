@@ -39,15 +39,15 @@ function LinkItem({ link, showDesc }: { link: Link; showDesc: boolean }) {
       href={link.url}
       target="_blank"
       rel="noopener noreferrer"
-      className="block py-3 border-b border-neutral-200 dark:border-neutral-800 transition-colors hover:bg-neutral-50 dark:hover:bg-neutral-900/30 px-2 -mx-2"
+      className="block py-4 border-b border-neutral-200 dark:border-neutral-800 transition-colors hover:bg-neutral-50 dark:hover:bg-neutral-900/30 px-2 -mx-2"
     >
-      <div className="text-[15px] tracking-tight">{link.title}</div>
+      <div className="text-[18px] font-semibold tracking-tight leading-snug">{link.title}</div>
       {showDesc && link.description && (
-        <div className="text-[13px] text-neutral-600 dark:text-neutral-400 mt-1 line-clamp-2">
+        <div className="text-[15px] text-neutral-700 dark:text-neutral-300 mt-1.5 line-clamp-2 leading-snug">
           {link.description.slice(0, 200)}
         </div>
       )}
-      <div className="flex gap-3 mt-1 text-[12px] text-neutral-500 dark:text-neutral-500 flex-wrap">
+      <div className="flex gap-3 mt-1.5 text-[13px] font-medium text-neutral-500 dark:text-neutral-400 flex-wrap">
         <span className="truncate max-w-[60%]">{shortenUrl(link.url)}</span>
         {date && <span>{date}</span>}
       </div>
@@ -120,34 +120,34 @@ export default function LinksClient() {
           onChange={(e) => setQuery(e.target.value)}
           onKeyDown={(e) => e.key === 'Enter' && doSearch()}
           placeholder="search again, get different links every time..."
-          className="flex-1 px-3 py-2 text-[14px] bg-transparent border border-neutral-300 dark:border-neutral-700 rounded focus:outline-none focus:border-neutral-500 dark:focus:border-neutral-500"
+          className="flex-1 px-3 py-2.5 text-[16px] bg-transparent border border-neutral-300 dark:border-neutral-700 rounded focus:outline-none focus:border-neutral-500 dark:focus:border-neutral-500"
         />
         <button
           onClick={doSearch}
           disabled={searching || !query.trim()}
-          className="px-4 py-2 text-[14px] bg-neutral-900 text-white dark:bg-neutral-100 dark:text-neutral-900 rounded disabled:opacity-40 transition-opacity"
+          className="px-4 py-2.5 text-[15px] font-medium bg-neutral-900 text-white dark:bg-neutral-100 dark:text-neutral-900 rounded disabled:opacity-40 transition-opacity"
         >
           {searching ? '...' : 'search'}
         </button>
         {results && (
           <button
             onClick={clearSearch}
-            className="px-3 py-2 text-[14px] text-neutral-500 hover:text-neutral-900 dark:hover:text-neutral-100"
+            className="px-3 py-2.5 text-[15px] text-neutral-500 hover:text-neutral-900 dark:hover:text-neutral-100"
           >
             clear
           </button>
         )}
       </div>
 
-      {error && <div className="text-[14px] text-neutral-500 py-8">{error}</div>}
+      {error && <div className="text-[15px] text-neutral-500 py-8">{error}</div>}
 
       {results !== null ? (
         <div>
-          <div className="text-[13px] text-neutral-500 mb-3">
+          <div className="text-[14px] font-medium text-neutral-500 mb-3">
             {results.length} result{results.length === 1 ? '' : 's'} for &ldquo;{query}&rdquo;
           </div>
           {results.length === 0 ? (
-            <div className="text-[14px] text-neutral-500 py-8">No links found.</div>
+            <div className="text-[15px] text-neutral-500 py-8">No links found.</div>
           ) : (
             results.map((r, i) => <LinkItem key={i} link={r} showDesc />)
           )}
@@ -155,7 +155,7 @@ export default function LinksClient() {
       ) : (
         <div>
           {allLinks.length > 0 && (
-            <div className="text-[13px] text-neutral-500 mb-3">
+            <div className="text-[14px] font-medium text-neutral-500 mb-3">
               {allLinks.length}{cursor ? '+' : ''} links
             </div>
           )}
@@ -163,13 +163,13 @@ export default function LinksClient() {
           {cursor && !loading && (
             <button
               onClick={() => fetchPage(cursor)}
-              className="w-full py-6 text-[13px] text-neutral-500 hover:text-neutral-900 dark:hover:text-neutral-100"
+              className="w-full py-6 text-[14px] font-medium text-neutral-500 hover:text-neutral-900 dark:hover:text-neutral-100"
             >
               load more
             </button>
           )}
           {loading && allLinks.length === 0 && (
-            <div className="text-[14px] text-neutral-500 py-8">Loading...</div>
+            <div className="text-[15px] text-neutral-500 py-8">Loading...</div>
           )}
         </div>
       )}

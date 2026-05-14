@@ -2,20 +2,27 @@
 
 import { useEffect, useState } from 'react'
 
+function defaultThemeForHour() {
+  const h = new Date().getHours()
+  return h >= 6 && h < 18 ? 'light' : 'dark'
+}
+
 export default function ThemeToggle() {
   const [theme, setTheme] = useState('dark')
 
   useEffect(() => {
-    const savedTheme = localStorage.getItem('theme') || 'dark'
-    setTheme(savedTheme)
-    document.documentElement.classList.toggle('dark', savedTheme === 'dark')
+    const saved = localStorage.getItem('theme')
+    const initial = saved || defaultThemeForHour()
+    setTheme(initial)
+    document.documentElement.classList.toggle('dark', initial === 'dark')
   }, [])
 
   const toggleTheme = () => {
     const newTheme = theme === 'dark' ? 'light' : 'dark'
     setTheme(newTheme)
     localStorage.setItem('theme', newTheme)
-    document.documentElement.classList.toggle('dark')
+    document.documentElement.classList.toggle('dark', newTheme === 'dark')
+    window.dispatchEvent(new Event('storage'))
   }
 
   return (
@@ -57,4 +64,4 @@ export default function ThemeToggle() {
       )}
     </button>
   )
-} 
+}

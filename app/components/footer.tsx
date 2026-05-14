@@ -1,8 +1,6 @@
 'use client';
 
 import { useState } from 'react'
-import { Clock } from './clock'
-import ThemeToggle from './theme-toggle'
 
 const EMAIL = 'sksq96@gmail.com'
 
@@ -50,7 +48,7 @@ export default function Footer() {
         }
       `}</style>
       <div className="flex justify-between items-center mt-8">
-        <ul className="font-sm flex flex-col space-x-0 space-y-2 footer-links md:flex-row md:space-x-4 md:space-y-0">
+        <ul className="text-[15px] flex flex-col space-x-0 space-y-2 footer-links md:flex-row md:space-x-4 md:space-y-0">
         <li>
           <a
             className="footer-link flex items-center transition-all hover:underline underline-offset-2 decoration-[0.1em]"
@@ -116,20 +114,16 @@ export default function Footer() {
           </a>
         </li>
         </ul>
-        <div className="flex items-center gap-2">
-          <ThemeToggle />
-        </div>
       </div>
       <div className="flex justify-between items-center mt-4">
         <a
           href="https://github.com/sksq96/personal"
           target="_blank"
           rel="noopener noreferrer"
-          className="footer-version text-sm"
+          className="footer-version text-[13px]"
         >
           shubham.lol
         </a>
-        <Clock />
       </div>
     </footer>
   )
