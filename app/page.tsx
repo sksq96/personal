@@ -15,6 +15,11 @@ export default function Page() {
             {`building `}<a href="https://tryhue.app" target="_blank" rel="noopener noreferrer" className="italic underline underline-offset-4 decoration-1">hue</a>{`. personal intelligence. like artificial intelligence, but it actually knows you. dm me on `}<a href="https://x.com/sksq96" target="_blank" rel="noopener noreferrer" className="underline underline-offset-4 decoration-1">twitter</a>{` or `}<CopyEmail />{` if any of this resonates.`}
           </p>
         </Callout>
+        <Callout icon="🎓">
+          <p className="text-[17px]">
+            {`taught `}<a href="https://www.youtube.com/playlist?list=PLxebUzBtXdb3c5OXSG_1F7VXqcmh9Xdnz" target="_blank" rel="noopener noreferrer" className="italic underline underline-offset-4 decoration-1">frontier language models</a>{`, a class on llms from the ground up. all lectures are on youtube.`}
+          </p>
+        </Callout>
       </div>
 
       <section className="mb-0">
@@ -37,7 +42,7 @@ export default function Page() {
 
           <section className="mb-4">
             <p className="mb-4 text-left text-[17px] leading-relaxed">
-              {`currently building `}<a href="https://tryhue.app" target="_blank" rel="noopener noreferrer" className="italic underline underline-offset-4 decoration-1">hue</a>{` at `}<span className="italic">strange intelligence</span>{`. a personal intelligence layer that lives in your imessages, learns who you are from your data, and reaches out to your friends' agents on your behalf. agent-to-agent communication, but the agent is shaped by you. the bet is that personal models are the missing piece. not bigger, just `}<span className="italic">yours</span>{`.`}
+              {`currently building `}<a href="https://tryhue.app" target="_blank" rel="noopener noreferrer" className="italic underline underline-offset-4 decoration-1">hue</a>{` at `}<a href="https://www.strangeintelligence.ai/" target="_blank" rel="noopener noreferrer" className="italic underline underline-offset-4 decoration-1">strange intelligence</a>{`. a personal intelligence layer that lives in your imessages, learns who you are from your data, and reaches out to your friends' agents on your behalf. agent-to-agent communication, but the agent is shaped by you. the bet is that personal models are the missing piece. not bigger, just `}<span className="italic">yours</span>{`.`}
             </p>
           </section>
 
