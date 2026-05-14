@@ -53,14 +53,7 @@ export default function RootLayout({
       <head>
         <script
           dangerouslySetInnerHTML={{
-            __html: `
-              (function() {
-                var h = new Date().getHours()
-                var dark = !(h >= 6 && h < 18)
-                document.documentElement.classList.toggle('dark', dark)
-                try { localStorage.removeItem('theme') } catch (e) {}
-              })()
-            `,
+            __html: `document.documentElement.classList.add('dark')`,
           }}
         />
       </head>

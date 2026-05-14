@@ -2,20 +2,13 @@
 
 import { useEffect, useState } from 'react'
 
-function isDayHour() {
-  const h = new Date().getHours()
-  return h >= 6 && h < 18
-}
-
 export default function ThemeToggle() {
-  const [theme, setTheme] = useState<'light' | 'dark'>('light')
+  const [theme, setTheme] = useState<'light' | 'dark'>('dark')
   const [mounted, setMounted] = useState(false)
 
   useEffect(() => {
-    const initial = isDayHour() ? 'light' : 'dark'
-    setTheme(initial)
-    document.documentElement.classList.toggle('dark', initial === 'dark')
     setMounted(true)
+    document.documentElement.classList.add('dark')
   }, [])
 
   const toggle = () => {
